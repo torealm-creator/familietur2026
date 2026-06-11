@@ -1,9 +1,9 @@
-// Oppdatert: 12.6.2026, 00:37:13
+// Oppdatert: 12.6.2026, 00:47:08
 const TRIP_DATA = {
 
   glympse: {
     active: true,
-    url:    "https://www.google.com/maps/@/data=!4m5!7m4!1m2!1s106739946593338097911!2sChZ6eHJ0YVNJa1k0bG12TnVmMjNMSTRBEggHBlQB5IU_dQ%3D%3D!2e2?hl=no",
+    url:    "https://maps.app.goo.gl/SHXzwAi5Z1nBSWbXA",
   },
 
   status: {
