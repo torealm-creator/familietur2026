@@ -1,4 +1,4 @@
-// Oppdatert: 21.6.2026, 22:26:43
+// Oppdatert: 21.6.2026, 22:48:46
 const TRIP_DATA = {
 
   glympse: {
@@ -34,8 +34,8 @@ const TRIP_DATA = {
   posts: [
     {
       id: "post_1782073603715", date: "21. juni 2026", location: "Nannestad, Norge",
-      title: "Mot Altea, tredje gang, ny bil, samme leilighet!", excerpt: "**Mot Altea – tredje gang, ny bil, samme leilighet**\n\nKun kort tid til avreise og siste finpuss på det tekniske. Ladekab...",
-      fullText: "**Mot Altea – tredje gang, ny bil, samme leilighet**\n\nKun kort tid til avreise og siste finpuss på det tekniske. Ladekablene er pakket, ruta er planlagt (en ny en, som alltid – vi har aldri kjørt samme vei to ganger), og bilen er klar for sin første store prøve sørover.\n\nFor i år bytter vi hest i løpet: det er ikke Marias Xpeng G9 som skal kjøre oss til Spania, men min nye Zeekr 7X. Spennende å se hvordan den takler turen.\n\nTore, Maria, Christoffer og Charlotte ruller sørover. Caroline blir hjemme og jobber – og dermed mister vi vår innebygde shoppingradar. Ingen som peker ut \"den butikken der ser spennende ut\" når vi kjører gjennom en by denne gangen.\n\nReisemålet er som vanlig: leiligheten som mamma og Pål eier i Altea. Vi vet hvor nøklene henger, hvor de beste tomatene er, og at balkongen er perfekt for en kald drikke etter en lang kjøretur.\n\nNy bil, ny rute, samme deilige reisemål. Caroline – vi tar bilder!\n\nGod sommer! ☀️", image: "", featured: true,
+      title: "Mot Altea, tredje gang, ny bil, samme leilighet!", excerpt: "Kun kort tid til avreise og siste finpuss på det tekniske. Ladekablene er pakket, ruta er planlagt (en ny en, som alltid...",
+      fullText: "Kun kort tid til avreise og siste finpuss på det tekniske. Ladekablene er pakket, ruta er planlagt (en ny en, som alltid – vi har aldri kjørt samme vei to ganger), og bilen er klar for sin første store prøve sørover.\n\nFor i år bytter vi hest i løpet: det er ikke Marias Xpeng G9 som skal kjøre oss til Spania, men min nye Zeekr 7X. Spennende å se hvordan den takler turen.\n\nTore, Maria, Christoffer og Charlotte ruller sørover. Caroline blir hjemme og jobber – og dermed mister vi vår innebygde shoppingradar. Ingen som peker ut \"den butikken der ser spennende ut\" når vi kjører gjennom en by denne gangen.\n\nReisemålet er som vanlig: leiligheten som mamma og Pål eier i Altea. Vi vet hvor nøklene henger, hvor de beste tomatene er, og at balkongen er perfekt for en kald drikke etter en lang kjøretur.\n\nNy bil, ny rute, samme deilige reisemål. Caroline – vi tar bilder!\n\nGod sommer! ☀️", image: "bilder/0C041B0E-8176-44FA-8688-B738D83F110D.png", featured: true,
     }
   ],
 
