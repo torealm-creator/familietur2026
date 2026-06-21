@@ -6,464 +6,522 @@
 <title>Oppdater turen</title>
 <style>
 :root {
-  --ink: #1A1A2E;
   --road: #2E4057;
-  --sun: #EE6C4D;
-  --paper: #FAFAF7;
+  --sun:  #EE6C4D;
+  --green:#2DA44E;
+  --ink:  #1A1A2E;
+  --paper:#FAFAF7;
   --rule: #E8E4DC;
-  --muted: #8A8A8A;
-  --white: #fff;
-  --green: #4CAF50;
+  --muted:#8A8A8A;
+  --white:#FFFFFF;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body {
-  font-family: system-ui, sans-serif;
-  background: var(--paper);
-  color: var(--ink);
-  padding: 0 0 80px;
-}
+body { font-family: system-ui, sans-serif; background: var(--paper); color: var(--ink); padding-bottom: 100px; }
 
-.admin-header {
+/* HEADER */
+.header {
   background: var(--road);
   color: white;
-  padding: 20px 20px 16px;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  padding: 16px 20px;
+  position: sticky; top: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
 }
-.admin-title { font-size: 16px; font-weight: 700; }
-.admin-sub   { font-size: 12px; opacity: 0.65; margin-top: 2px; }
-
-.back-link {
-  font-size: 12px;
+.header-title { font-size: 16px; font-weight: 700; }
+.header-sub   { font-size: 11px; opacity: 0.6; margin-top: 1px; }
+.back-btn {
+  font-size: 12px; font-weight: 600;
   color: rgba(255,255,255,0.75);
   text-decoration: none;
   padding: 6px 12px;
-  border: 1px solid rgba(255,255,255,0.3);
+  border: 1px solid rgba(255,255,255,0.25);
   border-radius: 20px;
 }
 
-/* LOCK SCREEN */
+/* LOCK */
 #lockScreen {
-  max-width: 360px;
-  margin: 60px auto;
-  padding: 0 20px;
-  text-align: center;
+  max-width: 340px; margin: 60px auto; padding: 0 20px; text-align: center;
 }
-.lock-icon { font-size: 40px; margin-bottom: 16px; }
-.lock-title { font-size: 22px; font-weight: 700; margin-bottom: 8px; }
-.lock-sub { font-size: 14px; color: var(--muted); margin-bottom: 24px; }
+.lock-icon  { font-size: 44px; margin-bottom: 14px; }
+.lock-title { font-size: 22px; font-weight: 800; margin-bottom: 6px; }
+.lock-sub   { font-size: 14px; color: var(--muted); margin-bottom: 24px; }
 .lock-input {
-  width: 100%;
-  padding: 14px;
-  border: 1.5px solid var(--rule);
-  border-radius: 10px;
-  font-size: 18px;
-  letter-spacing: 4px;
-  text-align: center;
-  outline: none;
-  margin-bottom: 12px;
+  width: 100%; padding: 14px;
+  border: 1.5px solid var(--rule); border-radius: 12px;
+  font-size: 22px; letter-spacing: 6px; text-align: center;
+  outline: none; margin-bottom: 12px; background: white;
 }
 .lock-input:focus { border-color: var(--road); }
 .lock-btn {
-  width: 100%;
-  background: var(--road);
-  color: white;
-  border: none;
-  padding: 14px;
-  border-radius: 10px;
-  font-size: 15px;
-  font-weight: 600;
-  cursor: pointer;
+  width: 100%; background: var(--road); color: white;
+  border: none; padding: 15px; border-radius: 12px;
+  font-size: 15px; font-weight: 700; cursor: pointer;
 }
-.lock-error {
-  color: var(--sun);
-  font-size: 13px;
-  margin-top: 10px;
-  display: none;
-}
+.lock-error { color: var(--sun); font-size: 13px; margin-top: 10px; display: none; }
 
-/* ADMIN CONTENT */
+/* MAIN */
 #adminContent { display: none; padding: 0 16px; }
 
-.card {
-  background: var(--white);
-  border-radius: 14px;
-  border: 1.5px solid var(--rule);
-  padding: 18px;
-  margin-top: 16px;
-}
-
-.card-title {
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-bottom: 14px;
-  padding-bottom: 10px;
+/* SECTION TITLE */
+.section-title {
+  font-size: 11px; font-weight: 700; letter-spacing: 1.5px;
+  text-transform: uppercase; color: var(--muted);
+  margin: 24px 0 10px; padding-bottom: 8px;
   border-bottom: 1px solid var(--rule);
 }
 
-label {
-  display: block;
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--muted);
-  margin-bottom: 5px;
-  margin-top: 12px;
+/* FIELD */
+.field { margin-bottom: 12px; }
+.field label {
+  display: block; font-size: 12px; font-weight: 600;
+  color: var(--muted); margin-bottom: 5px;
 }
-label:first-of-type { margin-top: 0; }
+.field input, .field textarea, .field select {
+  width: 100%; padding: 12px 14px;
+  border: 1.5px solid var(--rule); border-radius: 10px;
+  font-size: 15px; font-family: inherit; color: var(--ink);
+  background: white; outline: none;
+}
+.field input:focus, .field textarea:focus, .field select:focus {
+  border-color: var(--road);
+}
+.field textarea { min-height: 90px; resize: vertical; line-height: 1.5; }
 
-input[type=text], input[type=number], textarea, select {
-  width: 100%;
-  padding: 11px 13px;
-  border: 1.5px solid var(--rule);
-  border-radius: 9px;
-  font-size: 14px;
-  font-family: inherit;
-  color: var(--ink);
-  background: var(--paper);
-  outline: none;
-  transition: border-color 0.15s;
+/* GPS BUTTON */
+.gps-btn {
+  width: 100%; background: var(--green); color: white;
+  border: none; padding: 13px; border-radius: 10px;
+  font-size: 14px; font-weight: 700; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  margin-bottom: 10px;
 }
-input:focus, textarea:focus, select:focus { border-color: var(--road); background: white; }
-textarea { min-height: 100px; resize: vertical; line-height: 1.5; }
+.gps-result { font-size: 12px; color: var(--green); margin: -6px 0 10px; min-height: 16px; }
 
-.route-stop-row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 8px 0;
-  border-bottom: 1px solid var(--rule);
+/* ROUTE STOPS */
+.stop-row {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 0; border-bottom: 1px solid var(--rule);
 }
-.route-stop-name { flex: 1; font-size: 14px; font-weight: 500; }
-.stop-state-select {
-  width: 110px;
-  padding: 7px 10px;
-  font-size: 12px;
+.stop-row:last-child { border-bottom: none; }
+.stop-flag { font-size: 18px; flex-shrink: 0; }
+.stop-name { flex: 1; font-size: 14px; font-weight: 600; }
+.stop-select {
+  width: 130px; padding: 8px 10px;
+  border: 1.5px solid var(--rule); border-radius: 8px;
+  font-size: 12px; background: white;
 }
 
-.btn-primary {
-  width: 100%;
-  background: var(--road);
-  color: white;
-  border: none;
-  padding: 15px;
-  border-radius: 10px;
-  font-size: 15px;
-  font-weight: 700;
-  cursor: pointer;
-  margin-top: 16px;
-  transition: background 0.15s;
+/* PUBLISH BUTTON */
+.publish-btn {
+  position: fixed; bottom: 20px; left: 16px; right: 16px;
+  background: var(--sun); color: white; border: none;
+  padding: 18px; border-radius: 16px;
+  font-size: 17px; font-weight: 800; cursor: pointer;
+  box-shadow: 0 4px 20px rgba(238,108,77,0.4);
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  z-index: 200;
 }
-.btn-primary:hover { background: var(--sun); }
+.publish-btn:disabled { background: #ccc; box-shadow: none; cursor: not-allowed; }
 
-.btn-secondary {
-  width: 100%;
-  background: transparent;
-  color: var(--road);
-  border: 1.5px solid var(--road);
-  padding: 13px;
-  border-radius: 10px;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  margin-top: 8px;
+/* STATUS OVERLAY */
+.status-overlay {
+  position: fixed; inset: 0; background: rgba(26,26,46,0.85);
+  z-index: 999; display: flex; align-items: center; justify-content: center;
+  display: none;
+}
+.status-box {
+  background: white; border-radius: 20px; padding: 32px 28px;
+  text-align: center; max-width: 300px; width: 90%;
+}
+.status-icon  { font-size: 48px; margin-bottom: 14px; }
+.status-title { font-size: 18px; font-weight: 800; margin-bottom: 6px; }
+.status-msg   { font-size: 14px; color: var(--muted); line-height: 1.5; }
+.status-close {
+  margin-top: 20px; background: var(--road); color: white;
+  border: none; padding: 12px 28px; border-radius: 10px;
+  font-size: 14px; font-weight: 700; cursor: pointer; width: 100%;
+}
+
+/* GLYMPSE TOGGLE */
+.toggle-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 0; border-bottom: 1px solid var(--rule);
+}
+.toggle-label { font-size: 14px; font-weight: 600; }
+.toggle-sub   { font-size: 12px; color: var(--muted); margin-top: 2px; }
+.toggle {
+  position: relative; width: 52px; height: 30px; flex-shrink: 0;
+}
+.toggle input { opacity: 0; width: 0; height: 0; }
+.toggle-slider {
+  position: absolute; inset: 0; background: #ccc;
+  border-radius: 15px; cursor: pointer; transition: .3s;
+}
+.toggle-slider:before {
+  content: ''; position: absolute;
+  width: 24px; height: 24px; border-radius: 50%;
+  background: white; top: 3px; left: 3px; transition: .3s;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+}
+.toggle input:checked + .toggle-slider { background: var(--green); }
+.toggle input:checked + .toggle-slider:before { transform: translateX(22px); }
+
+/* INFO BOX */
+.info-box {
+  background: #EBF5FF; border-radius: 10px; padding: 12px 14px;
+  font-size: 13px; color: #1A4A7A; line-height: 1.6; margin: 10px 0;
+}
+.warning-box {
+  background: #FFF3CD; border-radius: 10px; padding: 12px 14px;
+  font-size: 13px; color: #7A5000; line-height: 1.6; margin: 10px 0;
 }
 
 /* TOAST */
 .toast {
-  position: fixed;
-  bottom: 24px;
-  left: 50%;
-  transform: translateX(-50%) translateY(80px);
-  background: var(--road);
-  color: white;
-  padding: 13px 24px;
-  border-radius: 100px;
-  font-size: 14px;
-  font-weight: 600;
-  z-index: 999;
-  transition: transform 0.3s cubic-bezier(.4,0,.2,1);
-  white-space: nowrap;
+  position: fixed; bottom: 90px; left: 50%;
+  transform: translateX(-50%) translateY(60px);
+  background: var(--ink); color: white;
+  padding: 12px 22px; border-radius: 100px;
+  font-size: 13px; font-weight: 600;
+  transition: transform 0.3s; white-space: nowrap; z-index: 300;
 }
 .toast.show { transform: translateX(-50%) translateY(0); }
 
-/* GPS BUTTON */
-.gps-btn {
-  width: 100%;
-  background: var(--green);
-  color: white;
-  border: none;
-  padding: 13px;
-  border-radius: 10px;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  margin-bottom: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
+/* CONFIG SECTION */
+.config-section {
+  background: #F0F4F8; border-radius: 12px;
+  padding: 14px 16px; margin: 10px 0;
 }
-
-.instructions {
-  background: #EBF2FF;
-  border-radius: 10px;
-  padding: 14px;
-  font-size: 13px;
-  line-height: 1.6;
-  color: #2E4057;
-  margin-top: 16px;
+.config-title {
+  font-size: 12px; font-weight: 700; color: var(--road);
+  margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px;
 }
-.instructions strong { display: block; margin-bottom: 4px; font-size: 14px; }
-.instructions ol { padding-left: 18px; margin-top: 6px; }
-.instructions li { margin-bottom: 4px; }
 </style>
 </head>
 <body>
 
-<div class="admin-header">
+<div class="header">
   <div>
-    <div class="admin-title">✏️ Oppdater turen</div>
-    <div class="admin-sub">Kun for familien</div>
+    <div class="header-title">✏️ Oppdater turen</div>
+    <div class="header-sub">Kun for familien</div>
   </div>
-  <a href="index.html" class="back-link">← Se bloggen</a>
+  <a href="index.html" class="back-btn">← Bloggen</a>
 </div>
 
-<!-- LOCK SCREEN -->
+<!-- LOCK -->
 <div id="lockScreen">
   <div class="lock-icon">🔒</div>
   <div class="lock-title">Kun for familien</div>
-  <div class="lock-sub">Skriv inn koden for å oppdatere bloggen</div>
+  <div class="lock-sub">Skriv inn koden</div>
   <input type="password" class="lock-input" id="passwordInput" placeholder="••••" maxlength="8">
   <button class="lock-btn" onclick="unlock()">Logg inn</button>
   <div class="lock-error" id="lockError">Feil kode, prøv igjen</div>
 </div>
 
-<!-- ADMIN CONTENT -->
+<!-- ADMIN -->
 <div id="adminContent">
 
+  <!-- GITHUB CONFIG -->
+  <div class="section-title">⚙️ GitHub-tilkobling</div>
+  <div class="config-section">
+    <div class="config-title">Fyll inn én gang</div>
+    <div class="field">
+      <label>GitHub brukernavn</label>
+      <input type="text" id="ghUser" placeholder="torealm-creator">
+    </div>
+    <div class="field">
+      <label>Repository-navn</label>
+      <input type="text" id="ghRepo" placeholder="familietur2026">
+    </div>
+    <div class="field">
+      <label>Personal Access Token</label>
+      <input type="password" id="ghToken" placeholder="ghp_xxxxxxxxxxxx">
+    </div>
+    <div class="info-box">💡 Lagres kun på denne telefonen. Aldri delt med andre.</div>
+    <button onclick="saveConfig()" style="width:100%;background:var(--road);color:white;border:none;padding:12px;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;margin-top:4px">
+      💾 Lagre tilkobling
+    </button>
+  </div>
+
   <!-- STATUS -->
-  <div class="card">
-    <div class="card-title">📍 Status og posisjon</div>
-    <label>Statusmelding (vises øverst)</label>
-    <input type="text" id="statusText" placeholder="F.eks. Kjører gjennom Loire-dalen">
-    <label>Nåværende sted</label>
-    <input type="text" id="currentLocation" placeholder="F.eks. Bordeaux, Frankrike">
+  <div class="section-title">📍 Status</div>
+
+  <div class="field">
+    <label>Hvor er dere nå?</label>
+    <input type="text" id="currentLocation" placeholder="F.eks. Loire-dalen, Frankrike">
+  </div>
+
+  <div class="field">
+    <label>Statusmelding</label>
+    <input type="text" id="statusText" placeholder="F.eks. Kjører mot Bordeaux 🚗">
+  </div>
+
+  <div class="field">
     <label>Dag</label>
-    <input type="text" id="currentDay" placeholder="F.eks. Dag 4 av 8">
+    <select id="currentDay">
+      <option value="Dag 0 av 4">Dag 0 – Ikke reist ennå</option>
+      <option value="Dag 1 av 4">Dag 1 – Nannestad → Ringe</option>
+      <option value="Dag 2 av 4">Dag 2 – Ringe → Chambord</option>
+      <option value="Dag 3 av 4">Dag 3 – Chambord → Biarritz</option>
+      <option value="Dag 4 av 4">Dag 4 – Biarritz → Altea 🎉</option>
+    </select>
+  </div>
+
+  <div class="field">
     <label>Neste stopp</label>
-    <input type="text" id="nextStop" placeholder="F.eks. Biarritz">
+    <input type="text" id="nextStop" placeholder="F.eks. Bordeaux">
+  </div>
+
+  <div class="field">
     <label>Km kjørt totalt</label>
     <input type="number" id="kmDriven" placeholder="0">
+  </div>
 
-    <button class="gps-btn" onclick="getGPS()">📍 Hent GPS-posisjon automatisk</button>
-    <div id="gpsResult" style="font-size:12px;color:var(--muted);margin-bottom:8px;"></div>
-    <input type="number" id="gpsLat" placeholder="Breddegrad (lat)" step="0.0001">
-    <label style="margin-top:6px">Lengdegrad</label>
-    <input type="number" id="gpsLng" placeholder="Lengdegrad (lng)" step="0.0001">
-    <label style="margin-top:6px">Stednavn på kartet</label>
+  <!-- GPS -->
+  <div class="section-title">🛰️ GPS-posisjon på kart</div>
+  <button class="gps-btn" onclick="getGPS()">📍 Hent min posisjon nå</button>
+  <div class="gps-result" id="gpsResult"></div>
+  <div class="field">
+    <label>Breddegrad</label>
+    <input type="number" id="gpsLat" placeholder="60.2453" step="0.0001">
+  </div>
+  <div class="field">
+    <label>Lengdegrad</label>
+    <input type="number" id="gpsLng" placeholder="11.0371" step="0.0001">
+  </div>
+  <div class="field">
+    <label>Stedsnavn på kart</label>
     <input type="text" id="gpsLabel" placeholder="F.eks. Bordeaux">
   </div>
 
-  <!-- ROUTE STOPS -->
-  <div class="card">
-    <div class="card-title">🗺️ Rute-fremdrift</div>
-    <div id="stopsList"></div>
+  <!-- RUTE -->
+  <div class="section-title">🗺️ Rute-fremdrift</div>
+  <div id="stopsList"></div>
+
+  <!-- LIVE SPORING -->
+  <div class="section-title">📡 Live GPS-sporing</div>
+  <div class="toggle-row">
+    <div>
+      <div class="toggle-label">Sporing aktiv</div>
+      <div class="toggle-sub">Slå på når dere er på veien</div>
+    </div>
+    <label class="toggle">
+      <input type="checkbox" id="glympseActive">
+      <span class="toggle-slider"></span>
+    </label>
+  </div>
+  <div class="field" style="margin-top:10px;">
+    <label>Google Maps sporingslenke</label>
+    <input type="text" id="glympseUrl" placeholder="Lim inn lenke fra Google Maps her...">
+  </div>
+  <div class="info-box" style="margin-top:0">
+    📱 Slik får du lenken:<br>
+    Google Maps → Profilbilde → <strong>Del posisjon</strong> → Velg «Til jeg slår det av» → <strong>Kopier lenke</strong>
   </div>
 
-  <!-- NEW POST -->
-  <div class="card">
-    <div class="card-title">✍️ Nytt blogginnlegg</div>
+  <!-- BLOGGINNLEGG -->
+  <div class="section-title">✍️ Nytt innlegg</div>
+  <div class="field">
     <label>Overskrift</label>
-    <input type="text" id="postTitle" placeholder="F.eks. Dag 3 – slott og solnedgang i Loire">
+    <input type="text" id="postTitle" placeholder="Dag 2 – Slott og solnedgang">
+  </div>
+  <div class="field">
     <label>Sted</label>
-    <input type="text" id="postLocation" placeholder="F.eks. Loire-dalen, Frankrike">
-    <label>Ingress (kort sammendrag)</label>
-    <textarea id="postExcerpt" placeholder="Kort oppsummering som vises i kortlista..."></textarea>
-    <label>Fullt innlegg</label>
-    <textarea id="postFull" style="min-height:160px" placeholder="Skriv den fulle historien her..."></textarea>
+    <input type="text" id="postLocation" placeholder="Loire-dalen, Frankrike">
+  </div>
+  <div class="field">
+    <label>Tekst</label>
+    <textarea id="postFull" placeholder="Skriv om dagens opplevelser..."></textarea>
+  </div>
+  <div class="field">
     <label>Bildefil (valgfritt)</label>
-    <input type="text" id="postImage" placeholder="bilder/dag3.jpg">
+    <input type="text" id="postImage" placeholder="bilder/dag2.jpg">
   </div>
 
-  <!-- PHOTOS -->
-  <div class="card">
-    <div class="card-title">📷 Legg til bilde</div>
+  <!-- BILDE -->
+  <div class="section-title">📷 Legg til bilde</div>
+  <div class="field">
     <label>Filnavn</label>
-    <input type="text" id="photoSrc" placeholder="bilder/dag3-chambord.jpg">
+    <input type="text" id="photoSrc" placeholder="bilder/dag2-chambord.jpg">
+  </div>
+  <div class="field">
     <label>Bildetekst</label>
     <input type="text" id="photoCaption" placeholder="Château de Chambord i solnedgang">
   </div>
 
-  <!-- GENERATE -->
-  <button class="btn-primary" onclick="generateDataFile()">⬇️ Last ned oppdatert data.js</button>
-  <button class="btn-secondary" onclick="copyToClipboard()">📋 Kopier til utklippstavle</button>
+</div>
 
-  <div class="instructions">
-    <strong>📱 Slik oppdaterer du fra telefonen:</strong>
-    <ol>
-      <li>Fyll ut feltene over</li>
-      <li>Trykk "Last ned oppdatert data.js"</li>
-      <li>Åpne GitHub-appen på telefonen</li>
-      <li>Gå til <strong>js/data.js</strong> i repoet ditt</li>
-      <li>Lim inn det kopierte innholdet og lagre</li>
-      <li>Netlify oppdaterer nettsiden automatisk på ~30 sekunder ✅</li>
-    </ol>
+<!-- PUBLISH BUTTON -->
+<button class="publish-btn" id="publishBtn" onclick="publish()" style="display:none">
+  🚀 Publiser oppdatering
+</button>
+
+<!-- STATUS OVERLAY -->
+<div class="status-overlay" id="statusOverlay">
+  <div class="status-box">
+    <div class="status-icon" id="overlayIcon">⏳</div>
+    <div class="status-title" id="overlayTitle">Publiserer...</div>
+    <div class="status-msg" id="overlayMsg">Sender til GitHub</div>
+    <button class="status-close" id="overlayClose" onclick="closeOverlay()" style="display:none">OK</button>
   </div>
-
 </div>
 
 <div class="toast" id="toast"></div>
 
+<script src="js/data.js"></script>
 <script>
-// ── PASSWORD ──────────────────────────────────────────────────
-// Endre denne koden til noe bare familien vet
-const KODE = "tur2026";
+// ── PASSORD ──────────────────────────────────────────────
+const KODE = "tur2026"; // ← bytt dette
 
 function unlock() {
-  const val = document.getElementById('passwordInput').value;
-  if (val === KODE) {
+  if (document.getElementById('passwordInput').value === KODE) {
     document.getElementById('lockScreen').style.display = 'none';
     document.getElementById('adminContent').style.display = 'block';
-    loadCurrentData();
+    document.getElementById('publishBtn').style.display = 'flex';
+    loadData();
+    loadConfig();
   } else {
     document.getElementById('lockError').style.display = 'block';
     document.getElementById('passwordInput').value = '';
   }
 }
+document.getElementById('passwordInput').addEventListener('keydown', e => { if (e.key === 'Enter') unlock(); });
 
-document.getElementById('passwordInput').addEventListener('keydown', e => {
-  if (e.key === 'Enter') unlock();
-});
-
-// ── LOAD CURRENT DATA ─────────────────────────────────────────
-function loadCurrentData() {
-  const s = TRIP_DATA.status;
-  setVal('statusText',      s.text);
-  setVal('currentLocation', s.location);
-  setVal('currentDay',      s.day);
-  setVal('nextStop',        s.nextStop);
-  setVal('kmDriven',        s.kmDriven);
-  setVal('gpsLat',          TRIP_DATA.currentPosition.lat);
-  setVal('gpsLng',          TRIP_DATA.currentPosition.lng);
-  setVal('gpsLabel',        TRIP_DATA.currentPosition.label);
-  renderStopsList();
+// ── CONFIG (lagres i localStorage på telefonen) ───────────
+function saveConfig() {
+  const u = document.getElementById('ghUser').value.trim();
+  const r = document.getElementById('ghRepo').value.trim();
+  const t = document.getElementById('ghToken').value.trim();
+  if (!u || !r || !t) { showToast('Fyll inn alle tre feltene'); return; }
+  localStorage.setItem('gh_user',  u);
+  localStorage.setItem('gh_repo',  r);
+  localStorage.setItem('gh_token', t);
+  showToast('✅ Tilkobling lagret!');
 }
 
-function renderStopsList() {
+function loadConfig() {
+  const u = localStorage.getItem('gh_user')  || '';
+  const r = localStorage.getItem('gh_repo')  || '';
+  const t = localStorage.getItem('gh_token') || '';
+  if (u) document.getElementById('ghUser').value  = u;
+  if (r) document.getElementById('ghRepo').value  = r;
+  if (t) document.getElementById('ghToken').value = t;
+}
+
+// ── LAST INN NÅVÆRENDE DATA ───────────────────────────────
+function loadData() {
+  const s = TRIP_DATA.status || {};
+  const g = TRIP_DATA.glympse || {};
+  setVal('statusText',      s.text     || '');
+  setVal('currentLocation', s.location || '');
+  setVal('nextStop',        s.nextStop || '');
+  setVal('kmDriven',        s.kmDriven || 0);
+  setVal('gpsLat',          TRIP_DATA.currentPosition?.lat || '');
+  setVal('gpsLng',          TRIP_DATA.currentPosition?.lng || '');
+  setVal('gpsLabel',        TRIP_DATA.currentPosition?.label || '');
+  document.getElementById('glympseActive').checked = !!g.active;
+  setVal('glympseUrl', g.url || '');
+
+  // Dag dropdown
+  const dayEl = document.getElementById('currentDay');
+  for (let i = 0; i < dayEl.options.length; i++) {
+    if (dayEl.options[i].value === s.day) { dayEl.selectedIndex = i; break; }
+  }
+
+  // Rute-stopp
+  renderStops();
+}
+
+function renderStops() {
+  const flags = { 'Nannestad':'🇳🇴', 'Hirtshals':'🇩🇰', 'Ringe':'🇩🇪', 'Amsterdam':'🇳🇱', 'Loire':'🇫🇷', 'Bordeaux':'🇫🇷', 'Altea':'🇪🇸' };
   const container = document.getElementById('stopsList');
   container.innerHTML = '';
-  TRIP_DATA.routeStops.forEach((stop, i) => {
+  (TRIP_DATA.routeStops || []).forEach((stop, i) => {
     const row = document.createElement('div');
-    row.className = 'route-stop-row';
+    row.className = 'stop-row';
     row.innerHTML = `
-      <span class="route-stop-name">${stop.label}</span>
-      <select class="stop-state-select" id="stop_${i}">
-        <option value=""      ${stop.state === ''        ? 'selected':''}>Ikke besøkt</option>
-        <option value="current" ${stop.state === 'current'  ? 'selected':''}>📍 Her nå</option>
-        <option value="done"    ${stop.state === 'done'     ? 'selected':''}>✅ Besøkt</option>
-      </select>
-    `;
+      <span class="stop-flag">${flags[stop.label] || '📍'}</span>
+      <span class="stop-name">${stop.label}</span>
+      <select class="stop-select" id="stop_${i}">
+        <option value=""       ${stop.state===''        ?'selected':''}>Ikke besøkt</option>
+        <option value="current"${stop.state==='current' ?'selected':''}>📍 Her nå</option>
+        <option value="done"   ${stop.state==='done'    ?'selected':''}>✅ Besøkt</option>
+      </select>`;
     container.appendChild(row);
   });
 }
 
-// ── GPS ───────────────────────────────────────────────────────
+// ── GPS ───────────────────────────────────────────────────
 function getGPS() {
   const el = document.getElementById('gpsResult');
-  el.textContent = 'Henter posisjon...';
-  if (!navigator.geolocation) {
-    el.textContent = 'GPS ikke tilgjengelig i denne nettleseren';
-    return;
-  }
+  el.textContent = '⏳ Henter posisjon...';
+  el.style.color = 'var(--muted)';
   navigator.geolocation.getCurrentPosition(pos => {
-    const lat = pos.coords.latitude.toFixed(4);
-    const lng = pos.coords.longitude.toFixed(4);
-    setVal('gpsLat', lat);
-    setVal('gpsLng', lng);
-    el.textContent = `✅ Posisjon hentet: ${lat}, ${lng}`;
+    setVal('gpsLat', pos.coords.latitude.toFixed(5));
+    setVal('gpsLng', pos.coords.longitude.toFixed(5));
+    el.textContent = `✅ ${pos.coords.latitude.toFixed(4)}, ${pos.coords.longitude.toFixed(4)}`;
+    el.style.color = 'var(--green)';
   }, err => {
-    el.textContent = 'Kunne ikke hente GPS: ' + err.message;
+    el.textContent = '❌ Kunne ikke hente GPS';
+    el.style.color = 'var(--sun)';
   }, { enableHighAccuracy: true, timeout: 10000 });
 }
 
-// ── GENERATE data.js ─────────────────────────────────────────
+// ── BYGG data.js ──────────────────────────────────────────
 function buildDataJS() {
-  const stops = TRIP_DATA.routeStops.map((s, i) => {
+  const stops = (TRIP_DATA.routeStops || []).map((s, i) => {
     const state = document.getElementById('stop_' + i)?.value || s.state;
     return `    { label: "${s.label}", state: "${state}" }`;
   }).join(',\n');
 
-  const existingPosts = TRIP_DATA.posts;
-  const newTitle    = getVal('postTitle');
-  const newLocation = getVal('postLocation');
-  const newExcerpt  = getVal('postExcerpt');
-  const newFull     = getVal('postFull');
-  const newImage    = getVal('postImage');
-
-  const newPostsArray = [...existingPosts];
-  if (newTitle && newExcerpt) {
+  const existing = TRIP_DATA.posts || [];
+  const title    = getVal('postTitle');
+  const loc      = getVal('postLocation');
+  const full     = getVal('postFull');
+  const img      = getVal('postImage');
+  const allPosts = [...existing];
+  if (title && full) {
     const today = new Date().toLocaleDateString('nb-NO', { day:'numeric', month:'long', year:'numeric' });
-    newPostsArray.unshift({
-      id:       'post_' + Date.now(),
-      date:     today,
-      location: newLocation || 'På veien',
-      title:    newTitle,
-      excerpt:  newExcerpt,
-      fullText: newFull || newExcerpt,
-      image:    newImage || '',
-      featured: newPostsArray.length === 0,
-    });
+    allPosts.unshift({ id:'post_'+Date.now(), date:today, location:loc||'På veien', title, excerpt:full.substring(0,120)+'...', fullText:full, image:img||'', featured:allPosts.length===0 });
   }
-
-  const postsStr = newPostsArray.map(p => `    {
-      id:       "${p.id}",
-      date:     "${p.date}",
-      location: "${p.location}",
-      title:    "${p.title}",
-      excerpt:  ${JSON.stringify(p.excerpt)},
-      fullText: ${JSON.stringify(p.fullText)},
-      image:    "${p.image}",
-      featured: ${p.featured},
+  const postsStr = allPosts.map(p => `    {
+      id: "${p.id}", date: "${p.date}", location: "${p.location}",
+      title: ${JSON.stringify(p.title)}, excerpt: ${JSON.stringify(p.excerpt)},
+      fullText: ${JSON.stringify(p.fullText)}, image: "${p.image}", featured: ${p.featured},
     }`).join(',\n');
 
-  const existingPhotos = TRIP_DATA.photos;
-  const newPhotoSrc    = getVal('photoSrc');
-  const newPhotoCap    = getVal('photoCaption');
-  const allPhotos      = [...existingPhotos];
-  if (newPhotoSrc) {
-    allPhotos.unshift({ src: newPhotoSrc, caption: newPhotoCap });
-  }
-  const photosStr = allPhotos.map(p => `    { src: "${p.src}", caption: "${p.caption || ''}" }`).join(',\n');
+  const existing_photos = TRIP_DATA.photos || [];
+  const pSrc = getVal('photoSrc');
+  const pCap = getVal('photoCaption');
+  const allPhotos = [...existing_photos];
+  if (pSrc) allPhotos.unshift({ src: pSrc, caption: pCap });
+  const photosStr = allPhotos.map(p => `    { src: "${p.src}", caption: "${p.caption||''}" }`).join(',\n');
 
-  const routeCoords = TRIP_DATA.routeCoords.map(c => `    [${c[0]}, ${c[1]}]`).join(',\n');
+  const routeCoords = (TRIP_DATA.routeCoords || []).map(c => `    [${c[0]}, ${c[1]}]`).join(',\n');
 
-  return `// ============================================================
-//  data.js  –  REDIGER DENNE FILEN FOR Å OPPDATERE BLOGGEN
-//  Oppdatert: ${new Date().toLocaleString('nb-NO')}
-// ============================================================
+  const gActive = document.getElementById('glympseActive').checked;
+  const gUrl    = getVal('glympseUrl') || TRIP_DATA.glympse?.url || '';
 
+  return `// Oppdatert: ${new Date().toLocaleString('nb-NO')}
 const TRIP_DATA = {
 
+  glympse: {
+    active: ${gActive},
+    url:    "${gUrl}",
+  },
+
   status: {
-    text:     ${JSON.stringify(getVal('statusText') || TRIP_DATA.status.text)},
-    location: ${JSON.stringify(getVal('currentLocation') || TRIP_DATA.status.location)},
-    day:      ${JSON.stringify(getVal('currentDay') || TRIP_DATA.status.day)},
-    nextStop: ${JSON.stringify(getVal('nextStop') || TRIP_DATA.status.nextStop)},
-    kmDriven: ${getVal('kmDriven') || TRIP_DATA.status.kmDriven},
+    text:     ${JSON.stringify(getVal('statusText') || TRIP_DATA.status?.text || '')},
+    location: ${JSON.stringify(getVal('currentLocation') || TRIP_DATA.status?.location || '')},
+    day:      ${JSON.stringify(getVal('currentDay') || TRIP_DATA.status?.day || 'Dag 0 av 4')},
+    nextStop: ${JSON.stringify(getVal('nextStop') || TRIP_DATA.status?.nextStop || '')},
+    kmDriven: ${parseInt(getVal('kmDriven')) || 0},
     isLive:   true,
   },
 
   currentPosition: {
-    lat:   ${getVal('gpsLat') || TRIP_DATA.currentPosition.lat},
-    lng:   ${getVal('gpsLng') || TRIP_DATA.currentPosition.lng},
-    label: ${JSON.stringify(getVal('gpsLabel') || TRIP_DATA.currentPosition.label)},
+    lat:   ${parseFloat(getVal('gpsLat')) || TRIP_DATA.currentPosition?.lat || 60.2453},
+    lng:   ${parseFloat(getVal('gpsLng')) || TRIP_DATA.currentPosition?.lng || 11.0371},
+    label: ${JSON.stringify(getVal('gpsLabel') || TRIP_DATA.currentPosition?.label || 'Nannestad')},
   },
 
   routeStops: [
@@ -481,42 +539,87 @@ ${photosStr}
   routeCoords: [
 ${routeCoords}
   ],
-};
-`;
+};`;
 }
 
-function generateDataFile() {
-  const content = buildDataJS();
-  const blob = new Blob([content], { type: 'text/javascript' });
-  const url  = URL.createObjectURL(blob);
-  const a    = document.createElement('a');
-  a.href     = url;
-  a.download = 'data.js';
-  a.click();
-  URL.revokeObjectURL(url);
-  showToast('✅ data.js lastet ned! Last opp til GitHub.');
+// ── PUBLISER TIL GITHUB ───────────────────────────────────
+async function publish() {
+  const user  = localStorage.getItem('gh_user');
+  const repo  = localStorage.getItem('gh_repo');
+  const token = localStorage.getItem('gh_token');
+
+  if (!user || !repo || !token) {
+    showToast('⚙️ Fyll inn GitHub-tilkobling øverst først');
+    return;
+  }
+
+  showOverlay('⏳', 'Publiserer...', 'Sender til GitHub – tar noen sekunder');
+
+  try {
+    const content = buildDataJS();
+    const encoded = btoa(unescape(encodeURIComponent(content)));
+    const filePath = 'js/data.js';
+    const apiUrl = `https://api.github.com/repos/${user}/${repo}/contents/${filePath}`;
+
+    // Get current SHA
+    const getRes = await fetch(apiUrl, {
+      headers: { Authorization: `token ${token}`, Accept: 'application/vnd.github.v3+json' }
+    });
+    const getJson = await getRes.json();
+    const sha = getJson.sha;
+
+    // Update file
+    const putRes = await fetch(apiUrl, {
+      method: 'PUT',
+      headers: {
+        Authorization: `token ${token}`,
+        Accept: 'application/vnd.github.v3+json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        message: `Oppdatering ${new Date().toLocaleString('nb-NO')}`,
+        content: encoded,
+        sha: sha,
+      })
+    });
+
+    if (putRes.ok) {
+      showOverlay('🎉', 'Publisert!', 'Nettsiden oppdateres på ~30 sekunder. Svigerfar kan følge med!');
+      // Clear new post/photo fields
+      ['postTitle','postLocation','postFull','postImage','photoSrc','photoCaption'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.value = '';
+      });
+    } else {
+      const err = await putRes.json();
+      showOverlay('❌', 'Feil!', err.message || 'Sjekk GitHub-token og prøv igjen');
+    }
+  } catch(e) {
+    showOverlay('❌', 'Feil!', 'Ingen internett? Sjekk tilkoblingen og prøv igjen.');
+  }
 }
 
-function copyToClipboard() {
-  const content = buildDataJS();
-  navigator.clipboard.writeText(content).then(() => {
-    showToast('📋 Kopiert! Lim inn i data.js på GitHub.');
-  }).catch(() => {
-    showToast('Klarte ikke kopiere – prøv Last ned istedet');
-  });
+// ── OVERLAY ───────────────────────────────────────────────
+function showOverlay(icon, title, msg) {
+  document.getElementById('overlayIcon').textContent  = icon;
+  document.getElementById('overlayTitle').textContent = title;
+  document.getElementById('overlayMsg').textContent   = msg;
+  document.getElementById('overlayClose').style.display = (icon !== '⏳') ? 'block' : 'none';
+  document.getElementById('statusOverlay').style.display = 'flex';
+}
+function closeOverlay() {
+  document.getElementById('statusOverlay').style.display = 'none';
 }
 
-// ── UTILS ─────────────────────────────────────────────────────
+// ── UTILS ─────────────────────────────────────────────────
 function getVal(id) { return document.getElementById(id)?.value?.trim() || ''; }
 function setVal(id, val) { const el = document.getElementById(id); if (el) el.value = val; }
-
 function showToast(msg) {
   const t = document.getElementById('toast');
   t.textContent = msg;
   t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 3500);
+  setTimeout(() => t.classList.remove('show'), 3000);
 }
 </script>
-<script src="js/data.js"></script>
 </body>
 </html>
