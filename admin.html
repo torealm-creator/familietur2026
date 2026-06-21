@@ -318,6 +318,37 @@ body { font-family: system-ui, sans-serif; background: var(--paper); color: var(
     Google Maps → Profilbilde → <strong>Del posisjon</strong> → Velg «Til jeg slår det av» → <strong>Kopier lenke</strong>
   </div>
 
+  <!-- REDIGER EKSISTERENDE INNLEGG -->
+  <div class="section-title">✏️ Rediger eksisterende innlegg</div>
+  <div class="field">
+    <label>Velg innlegg å redigere</label>
+    <select id="editPostSelect" onchange="loadPostForEdit()">
+      <option value="">— Velg innlegg —</option>
+    </select>
+  </div>
+  <div id="editPostFields" style="display:none">
+    <div class="field">
+      <label>Overskrift</label>
+      <input type="text" id="editTitle">
+    </div>
+    <div class="field">
+      <label>Sted</label>
+      <input type="text" id="editLocation">
+    </div>
+    <div class="field">
+      <label>Tekst</label>
+      <textarea id="editFull"></textarea>
+    </div>
+    <div class="field">
+      <label>Bildefil</label>
+      <input type="text" id="editImage">
+    </div>
+    <button onclick="saveEditedPost()" style="width:100%;background:var(--road);color:white;border:none;padding:12px;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;margin-top:4px">
+      💾 Lagre endringer i dette innlegget
+    </button>
+    <div class="info-box" style="margin-top:10px">Husk å trykke 🚀 Publiser nederst for at endringen skal vises på bloggen.</div>
+  </div>
+
   <!-- BLOGGINNLEGG -->
   <div class="section-title">✍️ Nytt innlegg</div>
   <div class="field">
@@ -429,6 +460,55 @@ function loadData() {
 
   // Rute-stopp
   renderStops();
+
+  // Eksisterende innlegg til redigering
+  renderEditPostDropdown();
+}
+
+// ── REDIGER EKSISTERENDE INNLEGG ──────────────────────────
+let editablePosts = JSON.parse(JSON.stringify(TRIP_DATA.posts || []));
+
+function renderEditPostDropdown() {
+  const sel = document.getElementById('editPostSelect');
+  sel.innerHTML = '<option value="">— Velg innlegg —</option>';
+  editablePosts.forEach((p, i) => {
+    const opt = document.createElement('option');
+    opt.value = i;
+    opt.textContent = `${p.date} · ${p.title}`;
+    sel.appendChild(opt);
+  });
+}
+
+function loadPostForEdit() {
+  const idx = document.getElementById('editPostSelect').value;
+  const fields = document.getElementById('editPostFields');
+  if (idx === '') { fields.style.display = 'none'; return; }
+  const p = editablePosts[idx];
+  setVal('editTitle',    p.title);
+  setVal('editLocation', p.location);
+  setVal('editFull',     p.fullText || p.excerpt);
+  setVal('editImage',    p.image || '');
+  fields.style.display = 'block';
+}
+
+function saveEditedPost() {
+  const idx = document.getElementById('editPostSelect').value;
+  if (idx === '') return;
+  const newTitle = getVal('editTitle');
+  const newLoc   = getVal('editLocation');
+  const newFull  = getVal('editFull');
+  const newImg   = getVal('editImage');
+
+  editablePosts[idx].title    = newTitle;
+  editablePosts[idx].location = newLoc;
+  editablePosts[idx].fullText = newFull;
+  editablePosts[idx].excerpt  = newFull.substring(0, 120) + (newFull.length > 120 ? '...' : '');
+  editablePosts[idx].image    = newImg;
+
+  renderEditPostDropdown();
+  document.getElementById('editPostSelect').value = idx;
+  document.getElementById('editPostFields').style.display = 'none';
+  showToast('✅ Innlegg oppdatert! Trykk 🚀 Publiser for å lagre.');
 }
 
 function renderStops() {
@@ -473,7 +553,7 @@ function buildDataJS() {
     return `    { label: "${s.label}", state: "${state}" }`;
   }).join(',\n');
 
-  const existing = TRIP_DATA.posts || [];
+  const existing = editablePosts || [];
   const title    = getVal('postTitle');
   const loc      = getVal('postLocation');
   const full     = getVal('postFull');
