@@ -1,57 +1,40 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sommertur 2026 – Nannestad til Altea</title>
+<meta property="og:title" content="Sommertur 2026 – Nannestad til Altea">
+<meta property="og:description" content="Følg oss på veien fra Norge til Costa Blanca – live oppdateringer, bilder og kart">
+<meta property="og:image" content="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<style>
+:root {
+  --ink:     #1A1A2E;
+  --road:    #2E4057;
+  --asphalt: #3D5A80;
+  --dust:    #98C1D9;
+  --horizon: #E0FBFC;
+  --sun:     #EE6C4D;
+  --sun-soft:#F4A58A;
+  --paper:   #FAFAF7;
+  --rule:    #E8E4DC;
+  --muted:   #8A8A8A;
+  --white:   #FFFFFF;
+}
 
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-27. JUNI 2026 · ZEEKR 7X · 4 PERSONER
-Nannestad til Altea
-Følg oss på veien fra Nannestad, over Atlanteren med Color Line, gjennom Loire-dalen og Bordeaux – helt ned til Costa Blanca.
-🇳🇴 Norge
-⛴️ Color Line
-🇩🇰 Danmark
-🇳🇱 Amsterdam
-🇫🇷 Loire · Bordeaux · Biarritz
-🇪🇸 Altea
-⏳ AVREISE FRA NANNESTAD
---
-DAGER
-:
---
-TIMER
-:
---
-MIN
-:
---
-SEK
-SuperSpeed 2 · Larvik → Hirtshals · 27. juni kl. 08:00
-STATUS
+html { scroll-behavior: smooth; }
 
-Forbereder avreise
-POSISJON
-Nannestad, Norge
-DAG
-Dag 0 av 8
-NESTE STOPP
-Larvik havn
-KM KJØRT
-0 km
-Ruten
-FREMDRIFT
-Kart
-Oppdateres underveis
-
-📍 Posisjon oppdateres når vi sender inn fra turen
-Fra veien
-0 innlegg
-🚗
-Turen starter 26. juni
-Første innlegg kommer når vi ruller ut fra Nannestad
-Bilder
-0 bilder
-📷
-Bilder kommer underveis
-Familie-roadtrip 2026 · Tore, 2 voksne + 2 tenåringer
-Oppdatert fra mobil underveis · Laget med ❤️ før avreise
-
-Lukk ✕}
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  line-height: 1.6;
+}
 
 /* ── MASTHEAD ── */
 .masthead {
@@ -70,7 +53,7 @@ Lukk ✕}
   inset: 0;
   background:
     linear-gradient(to bottom, rgba(30,40,57,0.55) 0%, rgba(30,40,57,0.2) 40%, rgba(30,40,57,0.8) 100%),
-    url('https://images.unsplash.com/photo-1566438480900-0609be27a4be?w=1400&q=80') center/cover no-repeat;
+    url('bilder/hero.jpg') center/cover no-repeat;
 }
 
 /* Animated road line – the signature element */
@@ -126,12 +109,13 @@ Lukk ✕}
 
 .trip-lead {
   font-size: 16px;
-  font-weight: 300;
-  color: rgba(255,255,255,0.8);
+  font-weight: 600;
+  color: #FFFFFF;
   max-width: 520px;
   margin-bottom: 32px;
   opacity: 0;
   animation: fadeUp 0.6s 1.4s ease forwards;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.8), 0 2px 12px rgba(0,0,0,0.6);
 }
 
 .route-pills {
@@ -598,6 +582,91 @@ Lukk ✕}
 .empty-icon { font-size: 40px; margin-bottom: 12px; }
 .empty-text { font-size: 15px; }
 .empty-sub  { font-size: 13px; margin-top: 6px; }
+
+/* ── COUNTDOWN ── */
+.cd-block {
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 10px;
+  padding: 10px 16px;
+  text-align: center;
+  min-width: 64px;
+  backdrop-filter: blur(4px);
+}
+.cd-num {
+  font-family: 'Lora', serif;
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--white);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.cd-label {
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  margin-top: 4px;
+}
+.cd-sep {
+  font-size: 28px;
+  font-weight: 300;
+  color: rgba(255,255,255,0.3);
+  align-self: center;
+  margin-bottom: 14px;
+}
+
+/* ── TURAPP BANNER ── */
+.turapp-banner {
+  background: linear-gradient(135deg, var(--road), var(--asphalt));
+  border-radius: 14px;
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  text-decoration: none;
+  transition: transform 0.15s, box-shadow 0.15s;
+  box-shadow: 0 4px 16px rgba(46,64,87,0.2);
+  border: 1.5px solid rgba(255,255,255,0.08);
+}
+.turapp-banner:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(46,64,87,0.3);
+}
+.turapp-banner-left { flex: 1; }
+.turapp-banner-eyebrow {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--dust);
+  margin-bottom: 4px;
+}
+.turapp-banner-title {
+  font-family: 'Lora', serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: white;
+  margin-bottom: 4px;
+}
+.turapp-banner-sub {
+  font-size: 12px;
+  color: rgba(255,255,255,0.6);
+}
+.turapp-banner-arrow {
+  background: var(--sun);
+  color: white;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
 </style>
 </head>
 <body>
@@ -607,16 +676,34 @@ Lukk ✕}
   <div class="masthead-bg"></div>
   <div class="road-line"></div>
   <div class="masthead-content">
-    <div class="trip-eyebrow">26. juni 2026 · Zeekr 7X · 4 personer</div>
+    <div class="trip-eyebrow">27. juni 2026 · Zeekr 7X · 4 personer</div>
     <h1 class="trip-headline">Nannestad<br>til <em>Altea</em></h1>
-    <p class="trip-lead">Følg oss på veien fra Nannestad, over Atlanteren med Color Line, gjennom Loire-dalen og Bordeaux – helt ned til Costa Blanca.</p>
+    <p class="trip-lead">Følg oss på veien fra Nannestad, over Skagerrak med Color Line, gjennom Loire-dalen og Bordeaux – helt ned til Costa Blanca.</p>
     <div class="route-pills">
-      <span class="route-pill">🇳🇴 Norge</span>
-      <span class="route-pill">⛴️ Color Line</span>
+      <span class="route-pill">🇳🇴 Nannestad</span>
+      <span class="route-pill">⛴️ Larvik → Hirtshals</span>
       <span class="route-pill">🇩🇰 Danmark</span>
+      <span class="route-pill">🇩🇪 Ringe</span>
       <span class="route-pill">🇳🇱 Amsterdam</span>
-      <span class="route-pill">🇫🇷 Loire · Bordeaux · Biarritz</span>
-      <span class="route-pill active">🇪🇸 Altea</span>
+      <span class="route-pill">🇫🇷 Loire · Bordeaux</span>
+      <span class="route-pill">🇫🇷🇪🇸 Biarritz-området</span>
+      <span class="route-pill active">🇪🇸 Altea ☀️</span>
+    </div>
+
+    <!-- COUNTDOWN -->
+    <div id="countdown-wrap" style="margin-top:28px;">
+      <div style="font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:10px;">⏳ Avreise fra Nannestad</div>
+      <div id="countdown-gone" style="display:none;font-size:20px;font-weight:700;color:var(--sun-soft);">🚗 Vi er på veien! God tur!</div>
+      <div id="countdown-blocks" style="display:flex;gap:10px;flex-wrap:wrap;">
+        <div class="cd-block"><div class="cd-num" id="cd-days">--</div><div class="cd-label">dager</div></div>
+        <div class="cd-sep">:</div>
+        <div class="cd-block"><div class="cd-num" id="cd-hours">--</div><div class="cd-label">timer</div></div>
+        <div class="cd-sep">:</div>
+        <div class="cd-block"><div class="cd-num" id="cd-minutes">--</div><div class="cd-label">min</div></div>
+        <div class="cd-sep">:</div>
+        <div class="cd-block"><div class="cd-num" id="cd-seconds">--</div><div class="cd-label">sek</div></div>
+      </div>
+      <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-top:10px;">SuperSpeed 2 · Larvik → Hirtshals · 27. juni kl. 08:00 · Overnatting: Ringe, Tyskland</div>
     </div>
   </div>
 </header>
@@ -647,10 +734,80 @@ Lukk ✕}
       <div class="status-label">Km kjørt</div>
       <div class="status-value" id="kmDriven">0 km</div>
     </div>
+    <div class="status-item">
+      <div class="status-label">Gjenstår</div>
+      <div class="status-value" id="kmRemaining">~3 200 km</div>
+    </div>
+    <div class="status-item">
+      <div class="status-label">Fullført</div>
+      <div class="status-value" id="pctDone">0%</div>
+    </div>
+  </div>
+</div>
+
+<!-- KM PROGRESS BAR -->
+<div style="background:var(--ink);padding:0 0 12px;">
+  <div style="max-width:860px;margin:0 auto;padding:0 24px;">
+    <div style="display:flex;justify-content:space-between;font-size:10px;font-weight:600;color:var(--dust);letter-spacing:1px;margin-bottom:5px;text-transform:uppercase;">
+      <span>Nannestad</span>
+      <span id="progressLabel">0 av 3 200 km</span>
+      <span>Altea</span>
+    </div>
+    <div style="height:6px;background:rgba(255,255,255,0.1);border-radius:3px;overflow:hidden;">
+      <div id="kmProgressBar" style="height:100%;width:0%;background:linear-gradient(90deg,#3D5A80,#EE6C4D);border-radius:3px;transition:width 0.8s ease;"></div>
+    </div>
   </div>
 </div>
 
 <main class="site-main">
+
+  <!-- TURAPP + KART LINKS -->
+  <div style="margin: 32px 0 8px; display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+  <a href="turapp.html" class="turapp-banner" style="margin-bottom:0">
+    <div class="turapp-banner-left">
+      <div class="turapp-banner-eyebrow">🗺️ Interaktiv reiseapp</div>
+      <div class="turapp-banner-title">Se hele reiseruten</div>
+      <div class="turapp-banner-sub">Alle etapper, ladestopp, sjekkliste og nyttig info</div>
+    </div>
+    <div class="turapp-banner-arrow">→</div>
+  </a>
+  <a href="kart.html" class="turapp-banner" style="margin-bottom:0;background:linear-gradient(135deg,#1a3a2a,#2d6a4a)">
+    <div class="turapp-banner-left">
+      <div class="turapp-banner-eyebrow">🗺️ Interaktivt kart</div>
+      <div class="turapp-banner-title">Se kjøreruten</div>
+      <div class="turapp-banner-sub">Alle 4 dager · ladestopp · overnatting</div>
+    </div>
+    <div class="turapp-banner-arrow" style="background:#2da44e">→</div>
+  </a>
+  </div>
+
+
+  <!-- LIVE SPORING -->
+  <div id="glympse-wrap" style="margin-bottom:24px;">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+      <div style="width:8px;height:8px;border-radius:50%;background:#4CAF50;animation:pulse 2s infinite;flex-shrink:0"></div>
+      <span style="font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#666">Live GPS-sporing</span>
+    </div>
+    <div id="glympse-active" style="display:none;">
+      <a id="glympse-link" href="#" target="_blank"
+         style="display:flex;align-items:center;justify-content:space-between;gap:16px;background:linear-gradient(135deg,#1B5E20,#2E7D32);border-radius:14px;padding:16px 20px;text-decoration:none;transition:transform 0.15s;border:1.5px solid rgba(255,255,255,0.1)">
+        <div>
+          <div style="font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.6);margin-bottom:4px;">📍 Vi er live på veien</div>
+          <div style="font-size:17px;font-weight:700;color:white;margin-bottom:3px;">Se hvor vi er akkurat nå</div>
+          <div style="font-size:12px;color:rgba(255,255,255,0.65);">Trykk for live Google Maps – åpnes i nettleseren</div>
+        </div>
+        <div style="background:#4CAF50;color:white;width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">📍</div>
+      </a>
+    </div>
+    <div id="glympse-inactive"
+         style="background:white;border:1.5px solid #E8E4DC;border-radius:14px;padding:16px 20px;display:flex;align-items:center;gap:14px;color:#888;">
+      <div style="font-size:28px;opacity:0.4">📍</div>
+      <div>
+        <div style="font-size:14px;font-weight:600;color:#444;margin-bottom:2px;">Live sporing ikke aktiv ennå</div>
+        <div style="font-size:12px;">Aktiver i admin når du er klar</div>
+      </div>
+    </div>
+  </div>
 
   <!-- ROUTE PROGRESS -->
   <div class="section-head">
@@ -719,6 +876,53 @@ Lukk ✕}
 <!-- SCRIPTS -->
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="js/data.js"></script>
+<script>
+// Kjør Glympse-sjekk umiddelbart når data.js er lastet
+(function() {
+  const g = TRIP_DATA && TRIP_DATA.glympse;
+  if (!g) return;
+  const active   = document.getElementById('glympse-active');
+  const inactive = document.getElementById('glympse-inactive');
+  const link     = document.getElementById('glympse-link');
+  if (g.active && g.url) {
+    if (active)   active.style.display   = 'block';
+    if (inactive) inactive.style.display = 'none';
+    if (link)     link.href              = g.url;
+  } else {
+    if (active)   active.style.display   = 'none';
+    if (inactive) inactive.style.display = 'flex';
+  }
+})();
+</script>
 <script src="js/blog.js"></script>
+
+<script>
+// Avreise fra Nannestad: 27. juni 2026 kl. 05:00 norsk tid (UTC+2 sommertid)
+const DEPARTURE = new Date('2026-06-27T05:00:00+02:00');
+
+function updateCountdown() {
+  const now = new Date();
+  const diff = DEPARTURE - now;
+
+  if (diff <= 0) {
+    document.getElementById('countdown-blocks').style.display = 'none';
+    document.getElementById('countdown-gone').style.display = 'block';
+    return;
+  }
+
+  const days    = Math.floor(diff / (1000 * 60 * 60 * 24));
+  const hours   = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+  document.getElementById('cd-days').textContent    = String(days).padStart(2, '0');
+  document.getElementById('cd-hours').textContent   = String(hours).padStart(2, '0');
+  document.getElementById('cd-minutes').textContent = String(minutes).padStart(2, '0');
+  document.getElementById('cd-seconds').textContent = String(seconds).padStart(2, '0');
+}
+
+updateCountdown();
+setInterval(updateCountdown, 1000);
+</script>
 </body>
 </html>
