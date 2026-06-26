@@ -202,7 +202,7 @@ body { font-family: system-ui, sans-serif; background: var(--paper); color: var(
 <div class="header">
   <div>
     <div class="header-title">✏️ Oppdater turen</div>
-    <div class="header-sub">Kun for familien</div>
+    <div class="header-sub" id="netStatus">Kun for familien</div>
   </div>
   <a href="index.html" class="back-btn">← Bloggen</a>
 </div>
@@ -244,6 +244,15 @@ body { font-family: system-ui, sans-serif; background: var(--paper); color: var(
 
   <!-- STATUS -->
   <div class="section-title">📍 Status</div>
+
+  <div class="field">
+    <label>Telefonnummer (for «Send SMS»-knapp på bloggen)</label>
+    <input type="text" id="contactPhone" placeholder="+4790073977">
+  </div>
+  <div class="field">
+    <label>E-post (for «Send e-post»-knapp på bloggen)</label>
+    <input type="text" id="contactEmail" placeholder="tore.alm@meko.com">
+  </div>
 
   <div class="field">
     <label>Hvor er dere nå?</label>
@@ -364,19 +373,48 @@ body { font-family: system-ui, sans-serif; background: var(--paper); color: var(
     <textarea id="postFull" placeholder="Skriv om dagens opplevelser..."></textarea>
   </div>
   <div class="field">
-    <label>Bildefil (valgfritt)</label>
-    <input type="text" id="postImage" placeholder="bilder/dag2.jpg">
+    <label>Hovedbilde (valgfritt)</label>
+    <button type="button" onclick="document.getElementById('postImageFile').click()" id="postImageBtn"
+      style="width:100%;background:white;color:var(--road);border:1.5px solid var(--road);padding:11px;border-radius:9px;font-size:14px;font-weight:600;cursor:pointer;margin-bottom:6px;">
+      📸 Last opp hovedbilde
+    </button>
+    <input type="file" id="postImageFile" accept="image/*" style="display:none" onchange="uploadPostImage(this.files[0], 'postImage', 'postImageStatus')">
+    <div id="postImageStatus" style="font-size:11px;text-align:center;min-height:14px;color:var(--muted)"></div>
+    <input type="text" id="postImage" placeholder="Lenke fylles inn automatisk" style="margin-top:6px">
+  </div>
+  <div class="field">
+    <label>Flere bilder (valgfritt)</label>
+    <button type="button" onclick="document.getElementById('postExtraFile').click()" id="postExtraBtn"
+      style="width:100%;background:white;color:var(--road);border:1.5px solid var(--road);padding:11px;border-radius:9px;font-size:14px;font-weight:600;cursor:pointer;margin-bottom:6px;">
+      📸 Last opp flere bilder (ett om gangen)
+    </button>
+    <input type="file" id="postExtraFile" accept="image/*" style="display:none" onchange="uploadExtraImage(this.files[0])">
+    <div id="postExtraStatus" style="font-size:11px;text-align:center;min-height:14px;color:var(--muted)"></div>
+    <textarea id="postExtraImages" placeholder="Lenker legges til automatisk her" style="min-height:70px;margin-top:6px"></textarea>
   </div>
 
   <!-- BILDE -->
   <div class="section-title">📷 Legg til bilde</div>
+
+  <button type="button" onclick="document.getElementById('cloudinaryFile').click()" id="uploadBtn"
+    style="width:100%;background:var(--green);color:white;border:none;padding:15px;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:6px;">
+    📸 Last opp bilde fra telefonen
+  </button>
+  <input type="file" id="cloudinaryFile" accept="image/*" style="display:none" onchange="uploadToCloudinary(this.files[0])">
+  <div id="uploadStatus" style="font-size:12px;text-align:center;min-height:18px;margin-bottom:10px;color:var(--muted)"></div>
+
+  <img id="uploadPreview" style="display:none;width:100%;border-radius:10px;margin-bottom:12px;max-height:220px;object-fit:cover;">
+
   <div class="field">
-    <label>Filnavn</label>
-    <input type="text" id="photoSrc" placeholder="bilder/dag2-chambord.jpg">
+    <label>Bilde-lenke (fylles automatisk etter opplasting)</label>
+    <input type="text" id="photoSrc" placeholder="Trykk «Last opp bilde» over">
   </div>
   <div class="field">
     <label>Bildetekst</label>
-    <input type="text" id="photoCaption" placeholder="Château de Chambord i solnedgang">
+    <input type="text" id="photoCaption" placeholder="F.eks. Solnedgang over Bordeaux">
+  </div>
+  <div class="info-box" style="margin-top:0">
+    💡 Bildet komprimeres og lagres automatisk – ingen GitHub-opplasting nødvendig. Husk å trykke 🚀 Publiser nederst.
   </div>
 
 </div>
@@ -410,11 +448,28 @@ function unlock() {
     document.getElementById('publishBtn').style.display = 'flex';
     loadData();
     loadConfig();
+    restoreDraftIfAny();
   } else {
     document.getElementById('lockError').style.display = 'block';
     document.getElementById('passwordInput').value = '';
   }
 }
+// ── NETT-STATUS ────────────────────────────────────────────
+function updateNetStatus() {
+  const el = document.getElementById('netStatus');
+  if (!el) return;
+  if (navigator.onLine) {
+    el.textContent = 'Kun for familien';
+    el.style.color = '';
+  } else {
+    el.innerHTML = '📡 Ingen nett – kladd lagres lokalt';
+    el.style.color = '#FFB199';
+  }
+}
+window.addEventListener('online', updateNetStatus);
+window.addEventListener('offline', updateNetStatus);
+updateNetStatus();
+
 document.getElementById('passwordInput').addEventListener('keydown', e => { if (e.key === 'Enter') unlock(); });
 
 // ── CONFIG (lagres i localStorage på telefonen) ───────────
@@ -451,6 +506,8 @@ function loadData() {
   setVal('gpsLabel',        TRIP_DATA.currentPosition?.label || '');
   document.getElementById('glympseActive').checked = !!g.active;
   setVal('glympseUrl', g.url || '');
+  setVal('contactPhone', TRIP_DATA.contact?.phone || '');
+  setVal('contactEmail', TRIP_DATA.contact?.email || '');
 
   // Dag dropdown
   const dayEl = document.getElementById('currentDay');
@@ -558,15 +615,18 @@ function buildDataJS() {
   const loc      = getVal('postLocation');
   const full     = getVal('postFull');
   const img      = getVal('postImage');
+  const extraImgsRaw = getVal('postExtraImages');
+  const extraImgs = extraImgsRaw ? extraImgsRaw.split('\n').map(s => s.trim()).filter(Boolean) : [];
   const allPosts = [...existing];
   if (title && full) {
     const today = new Date().toLocaleDateString('nb-NO', { day:'numeric', month:'long', year:'numeric' });
-    allPosts.unshift({ id:'post_'+Date.now(), date:today, location:loc||'På veien', title, excerpt:full.substring(0,120)+'...', fullText:full, image:img||'', featured:allPosts.length===0 });
+    allPosts.unshift({ id:'post_'+Date.now(), date:today, location:loc||'På veien', title, excerpt:full.substring(0,120)+'...', fullText:full, image:img||'', extraImages:extraImgs, featured:allPosts.length===0 });
   }
   const postsStr = allPosts.map(p => `    {
       id: "${p.id}", date: "${p.date}", location: "${p.location}",
       title: ${JSON.stringify(p.title)}, excerpt: ${JSON.stringify(p.excerpt)},
-      fullText: ${JSON.stringify(p.fullText)}, image: "${p.image}", featured: ${p.featured},
+      fullText: ${JSON.stringify(p.fullText)}, image: "${p.image}",
+      extraImages: ${JSON.stringify(p.extraImages || [])}, featured: ${p.featured},
     }`).join(',\n');
 
   const existing_photos = TRIP_DATA.photos || [];
@@ -577,12 +637,18 @@ function buildDataJS() {
   const photosStr = allPhotos.map(p => `    { src: "${p.src}", caption: "${p.caption||''}" }`).join(',\n');
 
   const routeCoords = (TRIP_DATA.routeCoords || []).map(c => `    [${c[0]}, ${c[1]}]`).join(',\n');
+  const routePath    = (TRIP_DATA.routePath  || TRIP_DATA.routeCoords || []).map(c => `    [${c[0]}, ${c[1]}]`).join(',\n');
 
   const gActive = document.getElementById('glympseActive').checked;
   const gUrl    = getVal('glympseUrl') || TRIP_DATA.glympse?.url || '';
 
   return `// Oppdatert: ${new Date().toLocaleString('nb-NO')}
 const TRIP_DATA = {
+
+  contact: {
+    phone: ${JSON.stringify(getVal('contactPhone') || TRIP_DATA.contact?.phone || '')},
+    email: ${JSON.stringify(getVal('contactEmail') || TRIP_DATA.contact?.email || '')},
+  },
 
   glympse: {
     active: ${gActive},
@@ -619,6 +685,10 @@ ${photosStr}
   routeCoords: [
 ${routeCoords}
   ],
+
+  routePath: [
+${routePath}
+  ],
 };`;
 }
 
@@ -630,6 +700,14 @@ async function publish() {
 
   if (!user || !repo || !token) {
     showToast('⚙️ Fyll inn GitHub-tilkobling øverst først');
+    return;
+  }
+
+  // Lagre alltid en lokal kladd FØR vi prøver å sende – mister vi nett, er teksten trygg
+  saveDraftLocally();
+
+  if (!navigator.onLine) {
+    showOverlay('📡', 'Ingen nett akkurat nå', 'Teksten din er lagret på telefonen. Trykk Publiser igjen når du har dekning – ingenting er tapt.');
     return;
   }
 
@@ -645,6 +723,7 @@ async function publish() {
     const getRes = await fetch(apiUrl, {
       headers: { Authorization: `token ${token}`, Accept: 'application/vnd.github.v3+json' }
     });
+    if (!getRes.ok) throw new Error('network');
     const getJson = await getRes.json();
     const sha = getJson.sha;
 
@@ -665,8 +744,9 @@ async function publish() {
 
     if (putRes.ok) {
       showOverlay('🎉', 'Publisert!', 'Nettsiden oppdateres på ~30 sekunder. Svigerfar kan følge med!');
+      clearDraftLocally();
       // Clear new post/photo fields
-      ['postTitle','postLocation','postFull','postImage','photoSrc','photoCaption'].forEach(id => {
+      ['postTitle','postLocation','postFull','postImage','postExtraImages','photoSrc','photoCaption'].forEach(id => {
         const el = document.getElementById(id);
         if (el) el.value = '';
       });
@@ -675,8 +755,36 @@ async function publish() {
       showOverlay('❌', 'Feil!', err.message || 'Sjekk GitHub-token og prøv igjen');
     }
   } catch(e) {
-    showOverlay('❌', 'Feil!', 'Ingen internett? Sjekk tilkoblingen og prøv igjen.');
+    showOverlay('📡', 'Fikk ikke kontakt', 'Teksten din er lagret på telefonen. Sjekk dekningen og trykk Publiser igjen – ingenting er tapt.');
   }
+}
+
+// ── LOKAL KLADD (sikrer at tekst ikke forsvinner offline) ─────
+function saveDraftLocally() {
+  const draft = {
+    postTitle: getVal('postTitle'), postLocation: getVal('postLocation'),
+    postFull: getVal('postFull'), postImage: getVal('postImage'),
+    postExtraImages: getVal('postExtraImages'),
+  };
+  localStorage.setItem('draft_post', JSON.stringify(draft));
+}
+function clearDraftLocally() {
+  localStorage.removeItem('draft_post');
+}
+function restoreDraftIfAny() {
+  const raw = localStorage.getItem('draft_post');
+  if (!raw) return;
+  try {
+    const draft = JSON.parse(raw);
+    if (draft.postTitle || draft.postFull) {
+      setVal('postTitle', draft.postTitle);
+      setVal('postLocation', draft.postLocation);
+      setVal('postFull', draft.postFull);
+      setVal('postImage', draft.postImage);
+      setVal('postExtraImages', draft.postExtraImages);
+      showToast('📝 Gjenopprettet en ulagret kladd');
+    }
+  } catch(e) {}
 }
 
 // ── OVERLAY ───────────────────────────────────────────────
@@ -691,7 +799,100 @@ function closeOverlay() {
   document.getElementById('statusOverlay').style.display = 'none';
 }
 
+// ── CLOUDINARY BILDEOPPLASTING ────────────────────────────
+const CLOUDINARY_CLOUD  = 'daakblz3f';
+const CLOUDINARY_PRESET = 'Almsommer';
+
+async function uploadToCloudinary(file) {
+  if (!file) return;
+  const status = document.getElementById('uploadStatus');
+  const btn    = document.getElementById('uploadBtn');
+  const preview = document.getElementById('uploadPreview');
+
+  status.textContent = '⏳ Laster opp... vent litt';
+  status.style.color = 'var(--muted)';
+  btn.disabled = true;
+  btn.style.opacity = '0.6';
+
+  const formData = new FormData();
+  formData.append('file', file);
+  formData.append('upload_preset', CLOUDINARY_PRESET);
+
+  try {
+    const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD}/image/upload`, {
+      method: 'POST',
+      body: formData,
+    });
+    const data = await res.json();
+
+    if (data.secure_url) {
+      // Legg til automatisk komprimering/optimalisering i URL-en
+      const optimized = data.secure_url.replace('/upload/', '/upload/f_auto,q_auto,w_1600/');
+      setVal('photoSrc', optimized);
+      preview.src = optimized;
+      preview.style.display = 'block';
+      status.textContent = '✅ Bilde lastet opp! Skriv en bildetekst og trykk Publiser.';
+      status.style.color = 'var(--green)';
+    } else {
+      status.textContent = '❌ Opplasting feilet. Prøv igjen.';
+      status.style.color = 'var(--sun)';
+    }
+  } catch(e) {
+    status.textContent = navigator.onLine ? '❌ Noe gikk galt. Prøv igjen.' : '📡 Ingen nett – prøv igjen når du har dekning.';
+    status.style.color = 'var(--sun)';
+  } finally {
+    btn.disabled = false;
+    btn.style.opacity = '1';
+  }
+}
+
 // ── UTILS ─────────────────────────────────────────────────
+async function cloudinaryUpload(file) {
+  const formData = new FormData();
+  formData.append('file', file);
+  formData.append('upload_preset', CLOUDINARY_PRESET);
+  const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD}/image/upload`, {
+    method: 'POST', body: formData,
+  });
+  const data = await res.json();
+  if (!data.secure_url) throw new Error('no url');
+  return data.secure_url.replace('/upload/', '/upload/f_auto,q_auto,w_1600/');
+}
+
+async function uploadPostImage(file, targetId, statusId) {
+  if (!file) return;
+  const status = document.getElementById(statusId);
+  status.textContent = '⏳ Laster opp...';
+  status.style.color = 'var(--muted)';
+  try {
+    const url = await cloudinaryUpload(file);
+    setVal(targetId, url);
+    status.textContent = '✅ Lastet opp!';
+    status.style.color = 'var(--green)';
+  } catch(e) {
+    status.textContent = navigator.onLine ? '❌ Feilet, prøv igjen' : '📡 Ingen nett';
+    status.style.color = 'var(--sun)';
+  }
+}
+
+async function uploadExtraImage(file) {
+  if (!file) return;
+  const status = document.getElementById('postExtraStatus');
+  const textarea = document.getElementById('postExtraImages');
+  status.textContent = '⏳ Laster opp...';
+  status.style.color = 'var(--muted)';
+  try {
+    const url = await cloudinaryUpload(file);
+    const existing = textarea.value.trim();
+    textarea.value = existing ? existing + '\n' + url : url;
+    status.textContent = '✅ Lagt til! Du kan laste opp flere.';
+    status.style.color = 'var(--green)';
+  } catch(e) {
+    status.textContent = navigator.onLine ? '❌ Feilet, prøv igjen' : '📡 Ingen nett';
+    status.style.color = 'var(--sun)';
+  }
+}
+
 function getVal(id) { return document.getElementById(id)?.value?.trim() || ''; }
 function setVal(id, val) { const el = document.getElementById(id); if (el) el.value = val; }
 function showToast(msg) {
