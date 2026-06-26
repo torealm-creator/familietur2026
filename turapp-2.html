@@ -1,0 +1,1422 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sommertur 2026 – Nannestad til Altea</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap');
+
+  :root {
+    --ocean: #1B3A5C;
+    --ocean-light: #2A5480;
+    --sand: #E8D5B0;
+    --sand-light: #F5EDD8;
+    --sunset: #D4845A;
+    --sunset-light: #E8A07A;
+    --mist: #F7F4EF;
+    --text: #2C2C2C;
+    --text-light: #666;
+    --white: #FFFFFF;
+    --green: #4A8C6F;
+    --green-light: #E8F5EE;
+    --charge: #F0A500;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: var(--mist);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  .header {
+    background:
+      linear-gradient(160deg, rgba(27,58,92,0.88), rgba(27,58,92,0.94)),
+      url('bilder/hero.jpg') center/cover no-repeat;
+    background-color: var(--ocean);
+    color: var(--white);
+    padding: 28px 20px 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .header::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 60px;
+    background: var(--mist);
+    clip-path: ellipse(55% 100% at 50% 100%);
+  }
+
+  .header-inner {
+    max-width: 680px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  .trip-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--sand);
+    margin-bottom: 6px;
+  }
+
+  .trip-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 4px;
+  }
+
+  .trip-subtitle {
+    font-size: 13px;
+    color: rgba(255,255,255,0.65);
+    margin-bottom: 20px;
+  }
+
+  /* STATS BAR */
+  .stats-bar {
+    display: flex;
+    gap: 0;
+    background: rgba(255,255,255,0.08);
+    border-radius: 10px 10px 0 0;
+    overflow: hidden;
+    margin-bottom: 0;
+  }
+
+  .stat {
+    flex: 1;
+    padding: 12px 8px;
+    text-align: center;
+    border-right: 1px solid rgba(255,255,255,0.1);
+  }
+  .stat:last-child { border-right: none; }
+
+  .stat-value {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--sand);
+    font-family: 'Playfair Display', serif;
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 10px;
+    color: rgba(255,255,255,0.55);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 3px;
+  }
+
+  /* PROGRESS ROAD */
+  .road-wrapper {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 20px 20px 0;
+  }
+
+  .road-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-light);
+    margin-bottom: 8px;
+  }
+
+  .road-track {
+    position: relative;
+    height: 6px;
+    background: #DDD;
+    border-radius: 3px;
+    margin-bottom: 6px;
+  }
+
+  .road-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--ocean), var(--sunset));
+    border-radius: 3px;
+    width: 0%;
+    transition: width 0.8s cubic-bezier(.4,0,.2,1);
+  }
+
+  .road-stops {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2px;
+  }
+
+  .road-stop-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #CCC;
+    border: 2px solid var(--mist);
+    margin-top: -14px;
+    position: relative;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+  }
+
+  .road-stop-dot.active {
+    background: var(--sunset);
+    transform: scale(1.4);
+  }
+
+  .road-stop-dot.done {
+    background: var(--ocean);
+  }
+
+  .road-stop-label {
+    font-size: 9px;
+    color: var(--text-light);
+    margin-top: 8px;
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  .road-stop-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  /* TABS */
+  .tabs {
+    max-width: 680px;
+    margin: 16px auto 0;
+    padding: 0 20px;
+    display: flex;
+    gap: 6px;
+  }
+
+  .tab {
+    padding: 7px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    background: transparent;
+    color: var(--text-light);
+    transition: all 0.2s;
+  }
+
+  .tab.active {
+    background: var(--ocean);
+    color: var(--white);
+  }
+
+  /* MAIN CONTENT */
+  .content {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 16px 20px 40px;
+  }
+
+  /* ETAPPE CARDS */
+  .etappe-card {
+    background: var(--white);
+    border-radius: 16px;
+    margin-bottom: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    border: 1.5px solid transparent;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+  }
+
+  .etappe-card.expanded {
+    border-color: var(--ocean);
+    box-shadow: 0 4px 20px rgba(27,58,92,0.12);
+  }
+
+  .etappe-header {
+    display: flex;
+    align-items: center;
+    padding: 14px 16px;
+    gap: 14px;
+  }
+
+  .etappe-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+
+  .etappe-meta {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .etappe-day {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-light);
+    margin-bottom: 2px;
+  }
+
+  .etappe-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .etappe-chips {
+    display: flex;
+    gap: 6px;
+    margin-top: 5px;
+    flex-wrap: wrap;
+  }
+
+  .chip {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+
+  .chip-km { background: #EBF2FF; color: var(--ocean); }
+  .chip-time { background: #FFF3E8; color: #C0642A; }
+  .chip-charge { background: #FFF8E6; color: #B08000; }
+  .chip-ferry { background: #E8F5EE; color: var(--green); }
+  .chip-country { background: var(--sand-light); color: #7A5A30; }
+
+  .etappe-chevron {
+    font-size: 14px;
+    color: var(--text-light);
+    transition: transform 0.3s;
+    flex-shrink: 0;
+  }
+
+  .etappe-card.expanded .etappe-chevron {
+    transform: rotate(180deg);
+  }
+
+  /* EXPANDED BODY */
+  .etappe-body {
+    display: none;
+    padding: 0 16px 16px;
+    border-top: 1px solid #F0EDE8;
+  }
+
+  .etappe-card.expanded .etappe-body {
+    display: block;
+  }
+
+  /* STOPS IN ETAPPE */
+  .stops-list {
+    margin-top: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .stop-item {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .stop-line {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+    width: 20px;
+  }
+
+  .stop-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 2px solid var(--ocean);
+    background: var(--white);
+    flex-shrink: 0;
+    margin-top: 3px;
+  }
+
+  .stop-dot.filled { background: var(--ocean); }
+  .stop-dot.charge-dot { border-color: var(--charge); }
+  .stop-dot.charge-dot.filled { background: var(--charge); }
+
+  .stop-connector {
+    width: 2px;
+    flex: 1;
+    min-height: 20px;
+    background: #E5E0D8;
+    margin: 3px 0;
+  }
+
+  .stop-content {
+    flex: 1;
+    padding-bottom: 4px;
+  }
+
+  .stop-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.3;
+  }
+
+  .stop-desc {
+    font-size: 12px;
+    color: var(--text-light);
+    margin-top: 2px;
+    line-height: 1.4;
+  }
+
+  .stop-time {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-light);
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin-top: 3px;
+  }
+
+  /* CHARGE BOX */
+  .charge-box {
+    background: #FFF8E6;
+    border-radius: 10px;
+    padding: 10px 12px;
+    margin-top: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-left: 3px solid var(--charge);
+  }
+
+  .charge-icon { font-size: 18px; }
+
+  .charge-info { flex: 1; }
+
+  .charge-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: #8A6000;
+  }
+
+  .charge-detail {
+    font-size: 11px;
+    color: #B08000;
+    margin-top: 1px;
+  }
+
+  /* TIPS BOX */
+  .tips-box {
+    background: var(--sand-light);
+    border-radius: 10px;
+    padding: 10px 12px;
+    margin-top: 10px;
+  }
+
+  .tips-title {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #7A5A30;
+    margin-bottom: 6px;
+  }
+
+  .tip-row {
+    font-size: 12px;
+    color: #6A4A20;
+    line-height: 1.5;
+    padding: 2px 0;
+    display: flex;
+    gap: 6px;
+  }
+
+  .tip-row::before {
+    content: '→';
+    flex-shrink: 0;
+    opacity: 0.5;
+  }
+
+  /* OVERNATT BOX */
+  .overnatt-box {
+    background: #EBF2FF;
+    border-radius: 10px;
+    padding: 10px 12px;
+    margin-top: 10px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .overnatt-icon { font-size: 18px; }
+
+  .overnatt-info { flex: 1; }
+
+  .overnatt-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--ocean);
+  }
+
+  .overnatt-desc {
+    font-size: 11px;
+    color: var(--ocean-light);
+    margin-top: 1px;
+  }
+
+  /* EV STATUS */
+  .ev-bar-wrap {
+    margin-top: 12px;
+  }
+
+  .ev-bar-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-light);
+    margin-bottom: 4px;
+  }
+
+  .ev-bar-track {
+    height: 8px;
+    background: #EBEBEB;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .ev-bar-fill {
+    height: 100%;
+    border-radius: 4px;
+    background: linear-gradient(90deg, var(--green), #8BC34A);
+    transition: width 0.6s;
+  }
+
+  .ev-bar-fill.low {
+    background: linear-gradient(90deg, #E53935, #FF7043);
+  }
+
+  .ev-bar-fill.mid {
+    background: linear-gradient(90deg, var(--charge), #FFC107);
+  }
+
+  /* PACKING TAB */
+  .pack-section { margin-bottom: 20px; }
+
+  .pack-section-title {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-light);
+    margin-bottom: 10px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid #E8E3DC;
+  }
+
+  .pack-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid #F5F0EA;
+    cursor: pointer;
+  }
+
+  .pack-item:last-child { border-bottom: none; }
+
+  .pack-check {
+    width: 22px;
+    height: 22px;
+    border-radius: 6px;
+    border: 2px solid #CCC;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    font-size: 13px;
+  }
+
+  .pack-item.checked .pack-check {
+    background: var(--green);
+    border-color: var(--green);
+    color: white;
+  }
+
+  .pack-item.checked .pack-text {
+    text-decoration: line-through;
+    color: var(--text-light);
+  }
+
+  .pack-text {
+    font-size: 14px;
+    color: var(--text);
+    line-height: 1.3;
+  }
+
+  .pack-sub {
+    font-size: 11px;
+    color: var(--text-light);
+    margin-top: 1px;
+  }
+
+  /* INFO TAB */
+  .info-card {
+    background: var(--white);
+    border-radius: 14px;
+    padding: 16px;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  }
+
+  .info-card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: var(--ocean);
+  }
+
+  .info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 7px 0;
+    border-bottom: 1px solid #F5F0EA;
+    gap: 10px;
+  }
+
+  .info-row:last-child { border-bottom: none; }
+
+  .info-key {
+    font-size: 12px;
+    color: var(--text-light);
+    flex-shrink: 0;
+  }
+
+  .info-val {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    text-align: right;
+  }
+
+  /* TAB PANEL */
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* FERRY BANNER */
+  .ferry-banner {
+    background: linear-gradient(135deg, var(--ocean), var(--ocean-light));
+    border-radius: 14px;
+    padding: 16px;
+    color: white;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .ferry-icon { font-size: 36px; }
+
+  .ferry-info { flex: 1; }
+
+  .ferry-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+
+  .ferry-detail {
+    font-size: 12px;
+    opacity: 0.75;
+    line-height: 1.5;
+  }
+</style>
+</head>
+<body>
+
+<div style="background:#1B3A5C;padding:10px 20px;display:flex;align-items:center;justify-content:space-between;gap:10px;position:sticky;top:0;z-index:100;">
+  <a href="index.html" style="color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;font-weight:600;">← Bloggen</a>
+  <a href="kart.html" style="color:rgba(255,255,255,0.85);text-decoration:none;font-size:13px;font-weight:600;background:rgba(255,255,255,0.1);padding:5px 12px;border-radius:20px;">🗺️ Se kart</a>
+</div>
+
+<div class="header">
+  <div class="header-inner">
+    <div class="trip-label">Sommertur 2026 · Zeekr 7X</div>
+    <div class="trip-title">Nannestad → Altea</div>
+    <div class="trip-subtitle">26. juni · 2 voksne + 2 tenåringer · ~3 200 km</div>
+    <div class="stats-bar">
+      <div class="stat">
+        <div class="stat-value">3 200</div>
+        <div class="stat-label">km totalt</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">4</div>
+        <div class="stat-label">dager</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">5</div>
+        <div class="stat-label">land</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">~8</div>
+        <div class="stat-label">ladestopp</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value" id="ta-pct">0%</div>
+        <div class="stat-label">fullført</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value" id="ta-km">0 km</div>
+        <div class="stat-label">kjørt</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- KM PROGRESS -->
+  <div style="padding:0 0 10px;">
+    <div style="display:flex;justify-content:space-between;font-size:10px;font-weight:600;color:rgba(255,255,255,0.45);letter-spacing:1px;margin-bottom:5px;text-transform:uppercase;padding:0 4px;">
+      <span>Nannestad</span>
+      <span id="ta-progress-label">0 av 3 200 km · 0%</span>
+      <span>Altea</span>
+    </div>
+    <div style="height:5px;background:rgba(255,255,255,0.1);border-radius:3px;overflow:hidden;">
+      <div id="ta-progress-bar" style="height:100%;width:0%;background:linear-gradient(90deg,var(--ocean-light),var(--sunset));border-radius:3px;transition:width 0.8s;"></div>
+    </div>
+  </div>
+</div>
+
+<div class="road-wrapper">
+  <div class="road-label">Reiserute</div>
+  <div class="road-track">
+    <div class="road-fill" id="roadFill"></div>
+  </div>
+  <div class="road-stops">
+    <div class="road-stop-col" onclick="scrollToEtappe(0)">
+      <div class="road-stop-dot active" id="dot0"></div>
+      <div class="road-stop-label">Nannestad</div>
+    </div>
+    <div class="road-stop-col" onclick="scrollToEtappe(1)">
+      <div class="road-stop-dot" id="dot1"></div>
+      <div class="road-stop-label">Hirtshals</div>
+    </div>
+    <div class="road-stop-col" onclick="scrollToEtappe(2)">
+      <div class="road-stop-dot" id="dot2"></div>
+      <div class="road-stop-label">Amsterdam</div>
+    </div>
+    <div class="road-stop-col" onclick="scrollToEtappe(3)">
+      <div class="road-stop-dot" id="dot3"></div>
+      <div class="road-stop-label">Loire</div>
+    </div>
+    <div class="road-stop-col" onclick="scrollToEtappe(4)">
+      <div class="road-stop-dot" id="dot4"></div>
+      <div class="road-stop-label">Bordeaux</div>
+    </div>
+    <div class="road-stop-col" onclick="scrollToEtappe(5)">
+      <div class="road-stop-dot" id="dot5"></div>
+      
+    </div>
+    <div class="road-stop-col" onclick="scrollToEtappe(6)">
+      <div class="road-stop-dot" id="dot6"></div>
+      <div class="road-stop-label">Altea</div>
+    </div>
+  </div>
+</div>
+
+<div class="tabs">
+  <button class="tab active" onclick="switchTab('rute', this)">Rute</button>
+  <button class="tab" onclick="switchTab('pakk', this)">Sjekkliste</button>
+  <button class="tab" onclick="switchTab('info', this)">Nyttig info</button>
+</div>
+
+<div class="content">
+
+  <!-- RUTE TAB -->
+  <div class="tab-panel active" id="tab-rute">
+
+    <!-- Etappe 0 -->
+    <div class="etappe-card" id="etappe0" onclick="toggleEtappe(this, 0)">
+      <div class="etappe-header">
+        <div class="etappe-icon" style="background:#EBF2FF;">🏠</div>
+        <div class="etappe-meta">
+          <div class="etappe-day">Dag 1 · 26. juni</div>
+          <div class="etappe-title">Nannestad → Larvik</div>
+          <div class="etappe-chips">
+            <span class="chip chip-km">~130 km</span>
+            <span class="chip chip-time">~1.5 t</span>
+            <span class="chip chip-country">🇳🇴 Norge</span>
+          </div>
+        </div>
+        <div class="etappe-chevron">▼</div>
+      </div>
+      <div class="etappe-body">
+        <div class="stops-list">
+          <div class="stop-item">
+            <div class="stop-line">
+              <div class="stop-dot filled"></div>
+              <div class="stop-connector"></div>
+            </div>
+            <div class="stop-content">
+              <div class="stop-name">🇳🇴 Nannestad – avreise</div>
+              <div class="stop-desc">Start tidlig – fulladet batteri. Ingen ladestopp nødvendig til Larvik.</div>
+            </div>
+          </div>
+          <div class="stop-item">
+            <div class="stop-line">
+              <div class="stop-dot filled"></div>
+            </div>
+            <div class="stop-content">
+              <div class="stop-name">🇳🇴 Larvik havn – innsjekk</div>
+              <div class="stop-desc">Color Line. Møt opp minst 60–90 min før avgang (08:00). Sjekk om fergen har lading om bord.</div>
+            </div>
+          </div>
+        </div>
+        <div class="ferry-banner" style="margin-top:12px;">
+          <div class="ferry-icon">⛴️</div>
+          <div class="ferry-info">
+            <div class="ferry-title">Color Line – Larvik → Hirtshals</div>
+            <div class="ferry-detail">Avgang ca. 08:00 · ~4 timer overfart<br>Sjekk elbillading om bord ved booking</div>
+          </div>
+        </div>
+        <div class="ev-bar-wrap">
+          <div class="ev-bar-label"><span>⚡ Batteri ved ankomst Larvik</span><span>~95%</span></div>
+          <div class="ev-bar-track"><div class="ev-bar-fill" style="width:95%"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Etappe 1 -->
+    <div class="etappe-card" id="etappe1" onclick="toggleEtappe(this, 1)">
+      <div class="etappe-header">
+        <div class="etappe-icon" style="background:#E8F5EE;">⛴️</div>
+        <div class="etappe-meta">
+          <div class="etappe-day">Dag 1 · ettermiddag</div>
+          <div class="etappe-title">Hirtshals → Ringe</div>
+          <div class="etappe-chips">
+            <span class="chip chip-km">~450 km</span>
+            <span class="chip chip-time">~5 t kjøring</span>
+            <span class="chip chip-charge">1 ladestopp</span>
+            <span class="chip chip-country">🇩🇰🇩🇪 DK / DE</span>
+          </div>
+        </div>
+        <div class="etappe-chevron">▼</div>
+      </div>
+      <div class="etappe-body">
+        <div class="stops-list">
+          <div class="stop-item">
+            <div class="stop-line">
+              <div class="stop-dot filled"></div>
+              <div class="stop-connector"></div>
+            </div>
+            <div class="stop-content">
+              <div class="stop-name">🇩🇰 Hirtshals havn</div>
+              <div class="stop-desc">Ankomst ~12:00. Kjør rett på E45 sørover gjennom Jylland.</div>
+            </div>
+          </div>
+          <div class="stop-item">
+            <div class="stop-line">
+              <div class="stop-dot charge-dot filled"></div>
+              <div class="stop-connector"></div>
+            </div>
+            <div class="stop-content">
+              <div class="stop-name">🇩🇰→🇩🇪 Grensen Danmark–Tyskland</div>
+              <div class="stop-desc">Ingen toll. Ringe ligger bare ~60 km inn i Tyskland fra grensen.</div>
+            </div>
+          </div>
+          <div class="stop-item">
+            <div class="stop-line">
+              <div class="stop-dot"></div>
+              <div class="stop-connector"></div>
+            </div>
+            <div class="stop-content">
+              <div class="stop-name">🇩🇰→🇩🇪 Grensen Danmark–Tyskland</div>
+              <div class="stop-desc">Ingen toll, bare kjør. Byttere til høyrekjøring er allerede standard fra DK.</div>
+            </div>
+          </div>
+          <div class="stop-item">
+            <div class="stop-line">
+              <div class="stop-dot charge-dot filled"></div>
+              <div class="stop-connector"></div>
+            </div>
+            <div class="stop-content">
+              <div class="stop-name">🇩🇰 ⚡ Lading – Vejle eller Kolding</div>
+              <div class="stop-desc">God dekning langs E45 i Danmark. 20 min topp – kombiner med kaffe.</div>
+            </div>
+          </div>
+          <div class="stop-item">
+            <div class="stop-line">
+              <div class="stop-dot filled"></div>
+            </div>
+            <div class="stop-content">
+              <div class="stop-name">🇩🇪 Horsea, Ringe – overnatting</div>
+              <div class="stop-desc">Grenseområdet Tyskland/Belgia. Sjekk om hotellet har elbillading.</div>
+            </div>
+          </div>
+        </div>
+        <div class="tips-box">
+          <div class="tips-title">Tips underveis</div>
+          <div class="tip-row">Legoland Billund ligger rett ved E45 – mulig stopp</div>
+          <div class="tip-row">Ringe er en rolig tysk landsby – perfekt for hvile før lang kjøredag</div>
+          <div class="tip-row">Tyske motorveier: ingen bompenger – men pass fartsgrenser i bygda</div>
+        </div>
+        <div class="overnatt-box">
+          <div class="overnatt-icon">🛏️</div>
+          <div class="overnatt-info">
+            <div class="overnatt-title">Horsea – Feldweg 10, Ringe 49824</div>
+            <div class="overnatt-desc">Allerede booket. ~450 km fra Hirtshals.</div>
+          </div>
+        </div>
+        <div class="ev-bar-wrap">
+          <div class="ev-bar-label"><span>⚡ Batteri ved ankomst Ringe</span><span>~50–60%</span></div>
+          <div class="ev-bar-track"><div class="ev-bar-fill mid" style="width:55%"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Etappe 2 -->
+    <div class="etappe-card" id="etappe2" onclick="toggleEtappe(this, 2)">
+      <div class="etappe-header">
+        <div class="etappe-icon" style="background:#FFF3E8;">🚲</div>
+        <div class="etappe-meta">
+          <div class="etappe-day">Dag 2</div>
+          <div class="etappe-title">Ringe → Amsterdam → sørover</div>
+          <div class="etappe-chips">
+            <span class="chip chip-km">~280 km + videre</span>
+            <span class="chip chip-time">3–4 t i Amsterdam</span>
+            <span class="chip chip-country">🇩🇪🇳🇱🇧🇪 DE / NL / BE</span>
+          </div>
+        </div>
+        <div class="etappe-chevron">▼</div>
+      </div>
+      <div class="etappe-body">
+        <div class="stops-list">
+          <div class="stop-item">
+            <div class="stop-line">
+              <div class="stop-dot filled"></div>
+              <div class="stop-connector"></div>
+            </div>
+            <div class="stop-content">
+              <div class="stop-name">🇩🇪 Ringe – avreise</div>
+              <div class="stop-desc">Start ladet. Kjør A31 nordvest inn i Nederland, videre A1/A2 mot Amsterdam.</div>
+            </div>
+          </div>
+          <div class="stop-item">
+            <div class="stop-line">
+              <div class="stop-dot"></div>
+              <div class="stop-connector"></div>
+            </div>
+            <div class="stop-content">
+              <div class="stop-name">🇩🇪→🇳🇱 Grensen Tyskland–Nederland</div>
+              <div class="stop-desc">Ingen tollstopp innen Schengen. Skilter bytter til nederlandsk.</div>
+            </div>
+          </div>
+          <div class="stop-item">
+            <div class="stop-line">
+              <div class="stop-dot filled"></div>
+              <div class="stop-connector"></div>
+            </div>
+            <div class="stop-content">
+              <div class="stop-name">🇳🇱 Amsterdam – Park + Ride</div>
+              <div class="stop-desc">Bruk P+R utenfor sentrum (f.eks. P+R Arena eller Olympisch Stadion). Ta metro inn – mye billigere enn sentrum-parkering.</div>
+            </div>
+          </div>
+          <div class="stop-item">
+            <div class="stop-line">
+              <div class="stop-dot filled"></div>
+              <div class="stop-connector"></div>
+            </div>
+            <div class="stop-content">
+              <div class="stop-name">🚲 Amsterdam sentrum – 3–4 timer</div>
+              <div class="stop-desc">Christoffers ønske! Kanalene, Rijksmuseum, sykkeltur. Nyt byen, så videre sørover ettermiddag.</div>
+            </div>
+          </div>
+          <div class="stop-item">
+            <div class="stop-line">
+              <div class="stop-dot"></div>
+              <div class="stop-connector"></div>
+            </div>
+            <div class="stop-content">
+              <div class="stop-name">🇳🇱→🇧🇪 Nederland–Belgia</div>
+              <div class="stop-desc">A2 sørover gjennom Utrecht og Eindhoven, inn i Belgia. Ingen toll.</div>
+            </div>
+          </div>
+          <div class="stop-item">
+            <div class="stop-line">
+              <div class="stop-dot charge-dot filled"></div>
+              <div class="stop-connector"></div>
+            </div>
+            <div class="stop-content">
+              <div class="stop-name">⚡ Lading – Eindhoven eller Antwerpen</div>
+              <div class="stop-desc">God FastNed/Ionity-dekning. 20 min lading – kombiner med pause.</div>
+            </div>
+          </div>
+          <div class="stop-item">
+            <div class="stop-line">
+              <div class="stop-dot charge-dot filled"></div>
+              <div class="stop-connector"></div>
+            </div>
+            <div class="stop-content">
+              <div class="stop-name">🇧🇪 ⚡ Lading – Antwerpen eller Brussel</div>
+              <div class="stop-desc">Ionity/FastNed langs E19. 20 min – kombiner med kveldsstopp.</div>
+            </div>
+          </div>
+          <div class="stop-item">
+            <div class="stop-line">
+              <div class="stop-dot"></div>
+              <div class="stop-connector"></div>
+            </div>
+            <div class="stop-content">
+              <div class="stop-name">🇧🇪→🇫🇷 Grensen Belgia–Frankrike</div>
+              <div class="stop-desc">Ingen toll. E17/A1 videre sørover mot Paris.</div>
+            </div>
+          </div>
+          <div class="stop-item">
+            <div class="stop-line">
+              <div class="stop-dot filled"></div>
+            </div>
+            <div class="stop-content">
+              <div class="stop-name">🇫🇷 Overnatting nær Chambord</div>
+              <div class="stop-desc">Kjør utenom Paris på A86/A10 – sikt mot Blois eller Bracieux, rett ved Chambord. Ca. 560 km fra Amsterdam.</div>
+            </div>
+          </div>
+        </div>
+        <div class="tips-box">
+          <div class="tips-title">Amsterdam – Christoffers 3–4 timer</div>
+          <div class="tip-row">Kanaltur til fots eller på leid sykkel – aller best inntrykk av byen</div>
+          <div class="tip-row">Rijksmuseum utenfor er gratis – fantastisk bygg selv uten billetter</div>
+          <div class="tip-row">Anne Frank-huset – book på nett på forhånd om dere vil inn</div>
+          <div class="tip-row">Stroopwafels fra markedet, ikke turistbutikkene</div>
+          <div class="tip-row">Start tilbake til bilen i god tid – ta ikke siste metro</div>
+        </div>
+        <div class="overnatt-box">
+          <div class="overnatt-icon">🛏️</div>
+          <div class="overnatt-info">
+            <div class="overnatt-title">Overnatting – Nær Chambord</div>
+            <div class="overnatt-desc">Søk hotell i Blois, Bracieux eller Muides-sur-Loire – alle 10–20 min fra Chambord. Da starter dere rett på slottet ved åpning 09:00!</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Etappe 3 -->
+    <div class="etappe-card" id="etappe3" onclick="toggleEtappe(this, 3)">
+      <div class="etappe-header">
+        <div class="etappe-icon" style="background:#F5EDD8;">🏰</div>
+        <div class="etappe-meta">
+          <div class="etappe-day">Dag 3</div>
+          <div class="etappe-title">Loire-dalen → Bordeaux</div>
+          <div class="etappe-chips">
+            <span class="chip chip-km">~430 km fra Loire</span>
+            <span class="chip chip-time">Slott om morgenen</span>
+            <span class="chip chip-charge">1 ladestopp</span>
+            <span class="chip chip-country">🇫🇷 Frankrike</span>
+          </div>
+        </div>
+        <div class="etappe-chevron">▼</div>
+      </div>
+      <div class="etappe-body">
+        <div class="stops-list">
+          <div class="stop-item">
+            <div class="stop-line">
+              <div class="stop-dot filled"></div>
+              <div class="stop-connector"></div>
+            </div>
+            <div class="stop-content">
+              <div class="stop-name">🇫🇷 Château de Chambord – ved åpning 09:00</div>
+              <div class="stop-desc">Dere bor rett ved! Gå rett dit ved åpning for å unngå folkemengder. Frankrikes største slott, 440 rom, dobbelspiral-trapp muligens av da Vinci. Sett av 2 timer.</div>
+            </div>
+          </div>
+          <div class="stop-item">
+            <div class="stop-line">
+              <div class="stop-dot filled"></div>
+              <div class="stop-connector"></div>
+            </div>
+            <div class="stop-content">
+              <div class="stop-name">🇫🇷 Château de Chenonceau</div>
+              <div class="stop-desc">40 km fra Chambord – slottet som hviler over elven Cher. Book billetter på nett på forhånd! Åpner 09:30. Sett av 1.5–2 timer.</div>
+            </div>
+          </div>
+          <div class="stop-item">
+            <div class="stop-line">
+              <div class="stop-dot"></div>
+              <div class="stop-connector"></div>
+            </div>
+            <div class="stop-content">
+              <div class="stop-name">🇫🇷 Lunsj i Amboise eller Tours</div>
+              <div class="stop-desc">Hyggelig bysentrum, fin plass for lunsj og lading før videre sørover. D952 langs elven er vakker landevei.</div>
+            </div>
+          </div>
+          <div class="stop-item">
+            <div class="stop-line">
+              <div class="stop-dot charge-dot filled"></div>
+              <div class="stop-connector"></div>
+            </div>
+            <div class="stop-content">
+              <div class="stop-name">🇫🇷 ⚡ Lading – Poitiers eller Saintes</div>
+              <div class="stop-desc">Ionity langs A10. 20 min – god buffer til Bordeaux.</div>
+            </div>
+          </div>
+          <div class="stop-item">
+            <div class="stop-line">
+              <div class="stop-dot filled"></div>
+            </div>
+            <div class="stop-content">
+              <div class="stop-name">🇫🇷 Bordeaux – ankomst kveld</div>
+              <div class="stop-desc">Ca. 430 km fra Loire. Parkér ved havnen eller P+R – sjekk inn og slapp av etter lang dag.</div>
+            </div>
+          </div>
+        </div>
+        <div class="tips-box">
+          <div class="tips-title">Dag 3 – timing er alt</div>
+          <div class="tip-row">Chambord først – åpner 09:00, vær der ved åpning</div>
+          <div class="tip-row">Chenonceau billetter MUST bookes på nett – chenonceau.com</div>
+          <div class="tip-row">Kjør D952 langs Loire-elven mellom slottene – ikke motorvei</div>
+          <div class="tip-row">Sikt mot Bordeaux innen 19:00 – da er det fortsatt liv i byen</div>
+          <div class="tip-row">Bompenger på A10 sørover – ha kort klart</div>
+        </div>
+        <div class="overnatt-box">
+          <div class="overnatt-icon">🛏️</div>
+          <div class="overnatt-info">
+            <div class="overnatt-title">Overnatting – Bordeaux</div>
+            <div class="overnatt-desc">Sentrum eller langs Garonne-elven. Sjekk elbillading ved hotellet.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Etappe 4 -->
+    <div class="etappe-card" id="etappe4" onclick="toggleEtappe(this, 4)">
+      <div class="etappe-header">
+        <div class="etappe-icon" style="background:#FFF0E8;">🏖️</div>
+        <div class="etappe-meta">
+          <div class="etappe-day">Dag 4</div>
+          <div class="etappe-title">Biarritz-området → Altea</div>
+          <div class="etappe-chips">
+            <span class="chip chip-km">~750 km</span>
+            <span class="chip chip-time">~8 t kjøring</span>
+            <span class="chip chip-charge">2 ladestopp</span>
+            <span class="chip chip-country">🇪🇸 Spania</span>
+          </div>
+        </div>
+        <div class="etappe-chevron">▼</div>
+      </div>
+      <div class="etappe-body">
+        <div class="stops-list">
+          <div class="stop-item">
+            <div class="stop-line">
+              <div class="stop-dot filled"></div>
+              <div class="stop-connector"></div>
+            </div>
+            <div class="stop-content">
+              <div class="stop-name">🇫🇷→🇪🇸 Avreise – grense Frankrike/Spania</div>
+              <div class="stop-desc">Lang dag – start senest 08:00. Kjør inn i Spania, AP-8 østover, så AP-1/A-2 sørover mot Zaragoza.</div>
+            </div>
+          </div>
+          <div class="stop-item">
+            <div class="stop-line">
+              <div class="stop-dot charge-dot filled"></div>
+              <div class="stop-connector"></div>
+            </div>
+            <div class="stop-content">
+              <div class="stop-name">🇪🇸 ⚡ Lading – Zaragoza</div>
+              <div class="stop-desc">Ionity eller Iberdrola ved Zaragoza. ~250 km fra Hondarribia. 25 min – ta lunsj her.</div>
+            </div>
+          </div>
+          <div class="stop-item">
+            <div class="stop-line">
+              <div class="stop-dot"></div>
+              <div class="stop-connector"></div>
+            </div>
+            <div class="stop-content">
+              <div class="stop-name">🇪🇸 Valencia – valgfritt stopp</div>
+              <div class="stop-desc">Ciudad de las Artes y las Ciencias langs AP-7 er spektakulær arkitektur. Verdt en pause hvis dere har tid.</div>
+            </div>
+          </div>
+          <div class="stop-item">
+            <div class="stop-line">
+              <div class="stop-dot charge-dot filled"></div>
+              <div class="stop-connector"></div>
+            </div>
+            <div class="stop-content">
+              <div class="stop-name">🇪🇸 ⚡ Lading – Valencia eller Gandía</div>
+              <div class="stop-desc">Endesa Charge eller Iberdrola langs AP-7. 20 min – siste lading før Altea.</div>
+            </div>
+          </div>
+          <div class="stop-item">
+            <div class="stop-line">
+              <div class="stop-dot filled"></div>
+            </div>
+            <div class="stop-content">
+              <div class="stop-name">🇪🇸 Altea – FREMME! 🎉</div>
+              <div class="stop-desc">Avinguda de les Corts Valencianes, 03590 Altea. Leiligheten venter – dere er fremme til 16. juli!</div>
+            </div>
+          </div>
+        </div>
+        <div class="tips-box">
+          <div class="tips-title">Siste dag – hold ut!</div>
+          <div class="tip-row">Start tidlig – 750 km er en lang dag selv med elbil</div>
+          <div class="tip-row">Spanske motorveier har bompenger – ha kort klart hele veien</div>
+          <div class="tip-row">Temperaturen stiger jo lenger sør dere kommer – ventilasjon viktig</div>
+          <div class="tip-row">Når dere ser Middelhavet for første gang – stopp og nyt det! 🌊</div>
+          <div class="tip-row">Elbillading i Altea: Iberdrola ved havnen og i sentrum</div>
+        </div>
+        <div class="overnatt-box">
+          <div class="overnatt-icon">🏠</div>
+          <div class="overnatt-info">
+            <div class="overnatt-title">Leilighet – Altea til 16. juli</div>
+            <div class="overnatt-desc">Avinguda de les Corts Valencianes, 03590 Altea · Dere er fremme! 🇪🇸☀️</div>
+          </div>
+        </div>
+        <div class="ev-bar-wrap">
+          <div class="ev-bar-label"><span>⚡ Batteri ved ankomst Altea</span><span>~35–45%</span></div>
+          <div class="ev-bar-track"><div class="ev-bar-fill mid" style="width:40%"></div></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- PAKK TAB -->
+  <div class="tab-panel" id="tab-pakk">
+
+    <div class="pack-section">
+      <div class="pack-section-title">🚗 Bil og elbil</div>
+      <div class="pack-item" onclick="togglePack(this)">
+        <div class="pack-check"></div>
+        <div><div class="pack-text">CCS Type 2 ladekabel (medfølger)</div><div class="pack-sub">Sjekk at den er med i bagasjen</div></div>
+      </div>
+      <div class="pack-item" onclick="togglePack(this)">
+        <div class="pack-check"></div>
+        <div><div class="pack-text">Grønt forsikringskort (grønt kort)</div><div class="pack-sub">Gjelder alle land på ruten</div></div>
+      </div>
+      <div class="pack-item" onclick="togglePack(this)">
+        <div class="pack-check"></div>
+        <div><div class="pack-text">ABRP – A Better Route Planner</div><div class="pack-sub">Last ned og legg inn Zeekr 7X</div></div>
+      </div>
+      <div class="pack-item" onclick="togglePack(this)">
+        <div class="pack-check"></div>
+        <div><div class="pack-text">PlugShare-appen</div><div class="pack-sub">Oversikt over ladestasjoner</div></div>
+      </div>
+      <div class="pack-item" onclick="togglePack(this)">
+        <div class="pack-check"></div>
+        <div><div class="pack-text">Varseltrekant og refleksvest</div><div class="pack-sub">Påbudt i Frankrike og Spania</div></div>
+      </div>
+      <div class="pack-item" onclick="togglePack(this)">
+        <div class="pack-check"></div>
+        <div><div class="pack-text">Ekstra solbriller til alle</div><div class="pack-sub">Lenger sør = mer sol</div></div>
+      </div>
+    </div>
+
+    <div class="pack-section">
+      <div class="pack-section-title">📄 Dokumenter</div>
+      <div class="pack-item" onclick="togglePack(this)">
+        <div class="pack-check"></div>
+        <div><div class="pack-text">Pass/ID for alle 4</div><div class="pack-sub">Også tenåringer trenger gyldig ID</div></div>
+      </div>
+      <div class="pack-item" onclick="togglePack(this)">
+        <div class="pack-check"></div>
+        <div><div class="pack-text">Vognkort</div></div>
+      </div>
+      <div class="pack-item" onclick="togglePack(this)">
+        <div class="pack-check"></div>
+        <div><div class="pack-text">Color Line-billetter</div><div class="pack-sub">Print ut eller ha på mobil</div></div>
+      </div>
+      <div class="pack-item" onclick="togglePack(this)">
+        <div class="pack-check"></div>
+        <div><div class="pack-text">Hotellbekreftelser</div><div class="pack-sub">Alle overnatting-bookinger</div></div>
+      </div>
+      <div class="pack-item" onclick="togglePack(this)">
+        <div class="pack-check"></div>
+        <div><div class="pack-text">EU-helsetrygdkort (EHIC/EHC)</div><div class="pack-sub">Gyldig i alle EU-land</div></div>
+      </div>
+      <div class="pack-item" onclick="togglePack(this)">
+        <div class="pack-check"></div>
+        <div><div class="pack-text">Reiseforsikring</div><div class="pack-sub">Dekning i alle reiseland</div></div>
+      </div>
+    </div>
+
+    <div class="pack-section">
+      <div class="pack-section-title">🎒 Praktisk</div>
+      <div class="pack-item" onclick="togglePack(this)">
+        <div class="pack-check"></div>
+        <div><div class="pack-text">Solkrem faktor 50</div><div class="pack-sub">Costa Blanca er hett i juli – minimum faktor 50</div></div>
+      </div>
+      <div class="pack-item" onclick="togglePack(this)">
+        <div class="pack-check"></div>
+        <div><div class="pack-text">Badeklær til alle</div><div class="pack-sub">Middelhavet og Altea-strendene</div></div>
+      </div>
+      <div class="pack-item" onclick="togglePack(this)">
+        <div class="pack-check"></div>
+        <div><div class="pack-text">Powerbank</div><div class="pack-sub">Mobil brukes mye på tur</div></div>
+      </div>
+      <div class="pack-item" onclick="togglePack(this)">
+        <div class="pack-check"></div>
+        <div><div class="pack-text">Europeisk SIM / roaming aktivert</div><div class="pack-sub">Sjekk at alle har dekning i FR og ES</div></div>
+      </div>
+      <div class="pack-item" onclick="togglePack(this)">
+        <div class="pack-check"></div>
+        <div><div class="pack-text">Cash i Euro</div><div class="pack-sub">Noen bomstasjoner og markeder</div></div>
+      </div>
+      <div class="pack-item" onclick="togglePack(this)">
+        <div class="pack-check"></div>
+        <div><div class="pack-text">Anne Frank-hus billetter</div><div class="pack-sub">Book på nett NESTE – kan selge ut</div></div>
+      </div>
+      <div class="pack-item" onclick="togglePack(this)">
+        <div class="pack-check"></div>
+        <div><div class="pack-text">Bassins des Lumières billetter</div><div class="pack-sub">bassins-lumieres.com</div></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- INFO TAB -->
+  <div class="tab-panel" id="tab-info">
+
+    <div class="info-card">
+      <div class="info-card-title">🔋 Zeekr 7X – nøkkeldata</div>
+      <div class="info-row"><span class="info-key">WLTP rekkevidde (AWD)</span><span class="info-val">541 km</span></div>
+      <div class="info-row"><span class="info-key">Reell rekkevidde sommer</span><span class="info-val">~470–500 km</span></div>
+      <div class="info-row"><span class="info-key">Batteri (netto)</span><span class="info-val">95 kWh</span></div>
+      <div class="info-row"><span class="info-key">Maks ladeeffekt</span><span class="info-val">480 kW</span></div>
+      <div class="info-row"><span class="info-key">10–80% ladetid</span><span class="info-val">~13 min</span></div>
+      <div class="info-row"><span class="info-key">Kontakt</span><span class="info-val">CCS Type 2</span></div>
+    </div>
+
+    <div class="info-card">
+      <div class="info-card-title">🛣️ Vei og bompenger</div>
+      <div class="info-row"><span class="info-key">Danmark</span><span class="info-val">Ingen bompenger</span></div>
+      <div class="info-row"><span class="info-key">Tyskland</span><span class="info-val">Ingen bompenger</span></div>
+      <div class="info-row"><span class="info-key">Belgia</span><span class="info-val">Ingen vignett, ingen bom</span></div>
+      <div class="info-row"><span class="info-key">Nederland</span><span class="info-val">Ingen bompenger</span></div>
+      <div class="info-row"><span class="info-key">Frankrike</span><span class="info-val">Bompenger på autoroutes</span></div>
+      <div class="info-row"><span class="info-key">Spania</span><span class="info-val">Bompenger på AP-7/A-7 langs kysten</span></div>
+    </div>
+
+    <div class="info-card">
+      <div class="info-card-title">📱 Anbefalte apper</div>
+      <div class="info-row"><span class="info-key">ABRP</span><span class="info-val">Elbilruting</span></div>
+      <div class="info-row"><span class="info-key">PlugShare</span><span class="info-val">Ladestasjoner</span></div>
+      <div class="info-row"><span class="info-key">Google Maps offline</span><span class="info-val">Last ned FR + ES</span></div>
+      <div class="info-row"><span class="info-key">Google Translate</span><span class="info-val">Kamera-oversettelse nyttig</span></div>
+    </div>
+
+    <div class="info-card">
+      <div class="info-card-title">⚠️ Viktige regler</div>
+      <div class="info-row"><span class="info-key">Refleksvest i bil</span><span class="info-val">Påbudt FR + ES</span></div>
+      <div class="info-row"><span class="info-key">Varseltrekant</span><span class="info-val">Påbudt FR + ES</span></div>
+      <div class="info-row"><span class="info-key">Alkoholtester</span><span class="info-val">Anbefalt i Frankrike</span></div>
+      <div class="info-row"><span class="info-key">Mobilbruk i bil</span><span class="info-val">Forbudt uten handsfree</span></div>
+      <div class="info-row"><span class="info-key">Nødnummer</span><span class="info-val">112 overalt</span></div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  function toggleEtappe(card, idx) {
+    const wasExpanded = card.classList.contains('expanded');
+    document.querySelectorAll('.etappe-card').forEach(c => c.classList.remove('expanded'));
+    if (!wasExpanded) {
+      card.classList.add('expanded');
+      updateProgress(idx);
+    } else {
+      updateProgress(-1);
+    }
+  }
+
+  function updateProgress(activeIdx) {
+    const dots = document.querySelectorAll('.road-stop-dot');
+    const fill = document.getElementById('roadFill');
+    dots.forEach((d, i) => {
+      d.classList.remove('active', 'done');
+      if (activeIdx >= 0) {
+        if (i < activeIdx) d.classList.add('done');
+        else if (i === activeIdx) d.classList.add('active');
+      } else {
+        d.classList.remove('active', 'done');
+        dots[0].classList.add('active');
+      }
+    });
+    if (activeIdx >= 0) {
+      fill.style.width = ((activeIdx / 6) * 100) + '%';
+    } else {
+      fill.style.width = '0%';
+    }
+  }
+
+  function scrollToEtappe(idx) {
+    const card = document.getElementById('etappe' + idx);
+    if (card) {
+      const wasExpanded = card.classList.contains('expanded');
+      document.querySelectorAll('.etappe-card').forEach(c => c.classList.remove('expanded'));
+      if (!wasExpanded) {
+        card.classList.add('expanded');
+        updateProgress(idx);
+      }
+      card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+
+  function switchTab(name, btn) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-' + name).classList.add('active');
+  }
+
+  function togglePack(item) {
+    item.classList.toggle('checked');
+    const check = item.querySelector('.pack-check');
+    check.textContent = item.classList.contains('checked') ? '✓' : '';
+  }
+
+  // Init
+  setTimeout(() => {
+    document.getElementById('roadFill').style.width = '0%';
+    document.getElementById('dot0').classList.add('active');
+
+    // KM progress
+    const TOTAL = 3200;
+    const driven = (TRIP_DATA.status && TRIP_DATA.status.kmDriven) || 0;
+    const pct = Math.min(100, Math.round((driven / TOTAL) * 100));
+    const remaining = Math.max(0, TOTAL - driven);
+
+    const pctEl = document.getElementById('ta-pct');
+    const kmEl  = document.getElementById('ta-km');
+    const bar   = document.getElementById('ta-progress-bar');
+    const label = document.getElementById('ta-progress-label');
+
+    if (pctEl) pctEl.textContent = pct + '%';
+    if (kmEl)  kmEl.textContent  = driven.toLocaleString('no') + ' km';
+    if (bar)   bar.style.width   = pct + '%';
+    if (label) label.textContent = driven.toLocaleString('no') + ' av ' + TOTAL.toLocaleString('no') + ' km · ' + pct + '%';
+  }, 100);
+</script>
+
+<script data-goatcounter="https://almsommer.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

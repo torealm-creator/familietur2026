@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kjørerute – Nannestad til Altea</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<style>
+:root {
+  --road: #2E4057;
+  --sun:  #EE6C4D;
+  --ink:  #1A1A2E;
+  --paper:#FAFAF7;
+  --rule: #E8E4DC;
+  --white:#FFFFFF;
+  --dust: #98C1D9;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: system-ui, sans-serif; background: var(--paper); color: var(--ink); }
+
+/* TOP BAR */
+.topbar {
+  background:
+    linear-gradient(120deg, rgba(46,64,87,0.92), rgba(46,64,87,0.85)),
+    url('bilder/hero.jpg') center/cover no-repeat;
+  background-color: var(--road);
+  color: white;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+.topbar-title { font-size: 15px; font-weight: 700; }
+.topbar-sub   { font-size: 11px; opacity: 0.6; margin-top: 1px; }
+.back-btn {
+  color: rgba(255,255,255,0.75);
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 14px;
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 20px;
+}
+
+/* DAY TABS */
+.day-tabs {
+  display: flex;
+  gap: 6px;
+  padding: 14px 16px;
+  background: white;
+  border-bottom: 1.5px solid var(--rule);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.day-tabs::-webkit-scrollbar { display: none; }
+.day-tab {
+  padding: 7px 16px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1.5px solid var(--rule);
+  background: transparent;
+  color: #666;
+  white-space: nowrap;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+.day-tab.active  { background: var(--road); color: white; border-color: var(--road); }
+.day-tab.done    { background: #E8F5EE; color: #2D7A4A; border-color: #A8D8BE; }
+
+/* MAP */
+#map {
+  width: 100%;
+  height: calc(100svh - 160px);
+}
+
+/* LEGEND */
+.legend {
+  position: absolute;
+  bottom: 24px;
+  left: 16px;
+  background: white;
+  border-radius: 10px;
+  padding: 12px 14px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+  z-index: 500;
+  font-size: 11px;
+  min-width: 130px;
+}
+.legend-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+  color: #444;
+}
+.legend-row:last-child { margin-bottom: 0; }
+.legend-line {
+  width: 24px;
+  height: 3px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+.legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* STOP INFO PANEL */
+.stop-panel {
+  position: absolute;
+  bottom: 24px;
+  right: 16px;
+  background: white;
+  border-radius: 12px;
+  padding: 14px 16px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+  z-index: 500;
+  max-width: 220px;
+  display: none;
+}
+.stop-panel.visible { display: block; }
+.stop-panel-day  { font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--sun); margin-bottom: 3px; }
+.stop-panel-name { font-size: 14px; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
+.stop-panel-desc { font-size: 12px; color: #666; line-height: 1.4; }
+.stop-panel-km   { font-size: 11px; font-weight: 600; color: var(--road); margin-top: 6px; }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div>
+    <div class="topbar-title">🗺️ Kjørerute – Nannestad til Altea</div>
+    <div class="topbar-sub">~3 200 km · 4 dager · 🇳🇴🇩🇰🇩🇪🇳🇱🇧🇪🇫🇷🇪🇸</div>
+  </div>
+  <a href="index.html" class="back-btn">← Bloggen</a>
+</div>
+
+<div class="day-tabs">
+  <button class="day-tab active" onclick="showDay(0, this)">🗺️ Hele ruten</button>
+  <button class="day-tab" onclick="showDay(1, this)">Dag 1 – Nannestad → Ringe</button>
+  <button class="day-tab" onclick="showDay(2, this)">Dag 2 – Ringe → Chambord</button>
+  <button class="day-tab" onclick="showDay(3, this)">Dag 3 – Chambord → Biarritz</button>
+  <button class="day-tab" onclick="showDay(4, this)">Dag 4 – Biarritz → Altea</button>
+</div>
+
+<div style="position:relative;">
+  <div id="map"></div>
+
+  <div class="legend">
+    <div class="legend-row"><div class="legend-line" style="background:#2E4057;opacity:0.4;border:1px dashed #2E4057"></div> Planlagt rute</div>
+    <div class="legend-row"><div class="legend-line" style="background:var(--sun)"></div> Kjørt strekning</div>
+    <div class="legend-row"><div class="legend-dot" style="background:var(--sun);box-shadow:0 0 0 3px rgba(238,108,77,0.3)"></div> Nåværende posisjon</div>
+    <div class="legend-row"><div class="legend-dot" style="background:#2E4057"></div> Overnatting</div>
+    <div class="legend-row"><div class="legend-dot" style="background:#F0A500"></div> Ladestopp</div>
+  </div>
+
+  <div class="stop-panel" id="stopPanel">
+    <div class="stop-panel-day" id="panelDay"></div>
+    <div class="stop-panel-name" id="panelName"></div>
+    <div class="stop-panel-desc" id="panelDesc"></div>
+    <div class="stop-panel-km" id="panelKm"></div>
+  </div>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="js/data.js"></script>
+<script>
+// ── RUTE MED MANGE VEIPUNKTER ────────────────────────────────
+// Dag 1: Nannestad → Larvik → (ferge) → Hirtshals → E45 → Ringe
+const DAG1 = [
+  [60.2453, 11.0371],  // Nannestad
+  [59.9139,  10.7522], // Oslo (forbi)
+  [59.5537,  10.5070], // Drammen
+  [59.2736,  10.3934], // Tønsberg
+  [59.0440,  10.0281], // Larvik
+  // ----- ferge -----
+  [57.5909,   9.9608], // Hirtshals
+  [57.2869,   9.9480], // Hjørring
+  [56.9029,   9.8549], // Aalborg
+  [56.4607,   9.9784], // Viborg
+  [55.7259,   9.5152], // Vejle
+  [55.4959,   9.4718], // Kolding
+  [55.3358,   9.5429], // Padborg / grense DK-DE
+  [52.4482,   7.0026], // Lingen
+  [52.4195,   7.1731], // Ringe
+];
+
+// Dag 2: Ringe → Nederland → Amsterdam → Belgia → Paris forbi → Chambord
+const DAG2 = [
+  [52.4195,   7.1731], // Ringe
+  [52.2215,   6.8937], // Grense DE-NL
+  [52.3676,   4.9041], // Amsterdam
+  [52.0907,   5.1214], // Utrecht
+  [51.4416,   5.4697], // Eindhoven
+  [51.2194,   4.4025], // Antwerpen
+  [50.8503,   4.3517], // Brussel
+  [50.4674,   3.9401], // Mons / grense BE-FR
+  [49.8941,   2.2958], // Amiens
+  [48.8566,   2.3522], // Paris (forbi på ringvei)
+  [48.4478,   1.4878], // Chartres
+  [47.9247,   1.9019], // Orléans
+  [47.6158,   1.5169], // Chambord
+];
+
+// Dag 3: Chambord → Chenonceau → A10 → Bordeaux → A63 → Biarritz-området
+const DAG3 = [
+  [47.6158,   1.5169], // Chambord
+  [47.3249,   1.0703], // Chenonceau
+  [47.2160,   0.6836], // Tours
+  [46.5802,   0.3387], // Poitiers
+  [45.7485,  -0.6388], // Saintes
+  [44.8378,  -0.5792], // Bordeaux
+  [44.2998,  -1.1572], // Arcachon-området
+  [43.8927,  -1.3667], // Hossegor
+  [43.4950,  -1.4748], // Bayonne
+  [43.4832,  -1.5586], // Biarritz
+];
+
+// Dag 4: Biarritz → Spania → Zaragoza → Valencia → Altea
+const DAG4 = [
+  [43.4832,  -1.5586], // Biarritz
+  [43.3183,  -1.9812], // Irun / grense FR-ES
+  [43.2630,  -2.9350], // Bilbao
+  [42.8467,  -2.6726], // Vitoria-Gasteiz
+  [41.6560,  -0.8773], // Zaragoza
+  [40.9429,  -0.1060], // Caspe
+  [39.4699,  -0.3763], // Valencia
+  [38.9942,  -0.0708], // Gandía
+  [38.7223,   0.0502], // Dénia
+  [38.5994,  -0.0503], // Altea
+];
+
+const ALL_DAYS = [DAG1, DAG2, DAG3, DAG4];
+const FULL_ROUTE = [...DAG1, ...DAG2.slice(1), ...DAG3.slice(1), ...DAG4.slice(1)];
+
+// ── STOPP MED INFO ───────────────────────────────────────────
+const STOPS = [
+  { day: "Dag 1 – Start",      name: "🇳🇴 Nannestad",         desc: "Avreise kl. 05:00",                          km: "0 km",       lat: 60.2453, lng: 11.0371, type: "start"   },
+  { day: "Dag 1 – Ferge",      name: "⛴️ Larvik havn",        desc: "SuperSpeed 2, avgang 08:00",                  km: "~130 km",    lat: 59.0440, lng: 10.0281, type: "ferry"   },
+  { day: "Dag 1 – Ankomst",    name: "🇩🇰 Hirtshals",         desc: "Ankomst fra ferge, videre på E45",            km: "~130 km",    lat: 57.5909, lng:  9.9608, type: "stop"    },
+  { day: "Dag 1 – Lading ⚡",  name: "🇩🇰 Vejle/Kolding",     desc: "Ionity/FastNed langs E45",                    km: "~480 km",    lat: 55.7259, lng:  9.5152, type: "charge"  },
+  { day: "Dag 1 – Overnatting",name: "🇩🇪 Ringe, Tyskland",   desc: "Horsea, Feldweg 10, 49824 Ringe",             km: "~600 km",    lat: 52.4195, lng:  7.1731, type: "sleep"   },
+  { day: "Dag 2 – Stopp",      name: "🇳🇱 Amsterdam",         desc: "Christoffers ønske! 3–4 timer i sentrum",     km: "~880 km",    lat: 52.3676, lng:  4.9041, type: "stop"    },
+  { day: "Dag 2 – Lading ⚡",  name: "🇧🇪 Eindhoven/Antwerpen",desc: "FastNed/Ionity",                             km: "~1 050 km",  lat: 51.4416, lng:  5.4697, type: "charge"  },
+  { day: "Dag 2 – Overnatting",name: "🇫🇷 Nær Chambord",      desc: "Blois, Bracieux eller Muides-sur-Loire",      km: "~1 450 km",  lat: 47.6158, lng:  1.5169, type: "sleep"   },
+  { day: "Dag 3 – Slott",      name: "🇫🇷 Château de Chambord",desc: "Frankrikes største slott – åpner 09:00",     km: "~1 450 km",  lat: 47.6158, lng:  1.5169, type: "stop"    },
+  { day: "Dag 3 – Slott",      name: "🇫🇷 Château de Chenonceau",desc: "Slottet over elven Cher",                  km: "~1 490 km",  lat: 47.3249, lng:  1.0703, type: "stop"    },
+  { day: "Dag 3 – Lading ⚡",  name: "🇫🇷 Poitiers/Saintes",  desc: "Ionity langs A10",                           km: "~1 700 km",  lat: 46.5802, lng:  0.3387, type: "charge"  },
+  { day: "Dag 3 – Lading ⚡",  name: "🇫🇷 Sør for Bordeaux",  desc: "Ionity ved Ondres/Labouheyre",               km: "~1 900 km",  lat: 43.8927, lng: -1.3667, type: "charge"  },
+  { day: "Dag 3 – Overnatting",name: "🇫🇷 Biarritz",          desc: "Mellom Bordeaux og Hondarribia",              km: "~2 050 km",  lat: 43.4832, lng: -1.5586, type: "sleep"   },
+  { day: "Dag 4 – Grense",     name: "🇫🇷→🇪🇸 Irun/Hendaye", desc: "Grensen Frankrike–Spania",                   km: "~2 100 km",  lat: 43.3183, lng: -1.9812, type: "stop"    },
+  { day: "Dag 4 – Lading ⚡",  name: "🇪🇸 Zaragoza",          desc: "Iberdrola/Ionity. Lunsj her!",               km: "~2 500 km",  lat: 41.6560, lng: -0.8773, type: "charge"  },
+  { day: "Dag 4 – Lading ⚡",  name: "🇪🇸 Valencia/Gandía",   desc: "Siste lading før Altea",                     km: "~2 950 km",  lat: 38.9942, lng: -0.0708, type: "charge"  },
+  { day: "Dag 4 – MÅL! 🎉",   name: "🇪🇸 Altea",             desc: "Avinguda de les Corts Valencianes, 03590",   km: "~3 200 km",  lat: 38.5994, lng: -0.0503, type: "end"     },
+];
+
+// ── MAP SETUP ────────────────────────────────────────────────
+const map = L.map('map', { zoomControl: true }).setView([50, 5], 5);
+
+L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+  attribution: '© OpenStreetMap, © CARTO',
+  maxZoom: 18,
+}).addTo(map);
+
+// Day colours
+const DAY_COLORS = ['#3D5A80', '#2E7D32', '#B06000', '#8B0000'];
+
+let routeLayers = [];
+let markerLayers = [];
+
+function clearLayers() {
+  routeLayers.forEach(l => map.removeLayer(l));
+  markerLayers.forEach(l => map.removeLayer(l));
+  routeLayers = [];
+  markerLayers = [];
+}
+
+function makeIcon(type, color) {
+  const sizes = { start: 14, end: 16, sleep: 13, charge: 11, stop: 10, ferry: 12 };
+  const colors = {
+    start:  '#2E4057',
+    end:    '#EE6C4D',
+    sleep:  '#2E4057',
+    charge: '#F0A500',
+    stop:   '#3D5A80',
+    ferry:  '#0077B6',
+  };
+  const sz = sizes[type] || 10;
+  const cl = color || colors[type] || '#666';
+  const border = type === 'end' ? '3px solid white' : '2px solid white';
+  const shadow = type === 'end' ? `box-shadow:0 0 0 3px rgba(238,108,77,0.4),0 2px 8px rgba(0,0,0,0.3)` : `box-shadow:0 1px 4px rgba(0,0,0,0.3)`;
+  return L.divIcon({
+    className: '',
+    html: `<div style="width:${sz}px;height:${sz}px;border-radius:50%;background:${cl};border:${border};${shadow}"></div>`,
+    iconSize: [sz, sz],
+    iconAnchor: [sz/2, sz/2],
+  });
+}
+
+function showPanel(stop) {
+  document.getElementById('panelDay').textContent  = stop.day;
+  document.getElementById('panelName').textContent = stop.name;
+  document.getElementById('panelDesc').textContent = stop.desc;
+  document.getElementById('panelKm').textContent   = '📍 ' + stop.km + ' fra Nannestad';
+  document.getElementById('stopPanel').classList.add('visible');
+}
+
+function drawRoute(coords, color, dashed) {
+  const opts = { color, weight: 3.5, opacity: 0.85 };
+  if (dashed) opts.dashArray = '8 5';
+  const line = L.polyline(coords, opts).addTo(map);
+  routeLayers.push(line);
+  return line;
+}
+
+function showDay(dayNum, btn) {
+  clearLayers();
+  document.querySelectorAll('.day-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('stopPanel').classList.remove('visible');
+
+  if (dayNum === 0) {
+    // Full route - all days
+    ALL_DAYS.forEach((coords, i) => {
+      drawRoute(coords, DAY_COLORS[i], false);
+    });
+    // Ferry as dashed
+    const ferryLine = L.polyline([[59.0440, 10.0281],[57.5909, 9.9608]], {
+      color: '#0077B6', weight: 3, dashArray: '6 4', opacity: 0.8
+    }).addTo(map);
+    routeLayers.push(ferryLine);
+
+    // All stops
+    STOPS.forEach(s => {
+      const m = L.marker([s.lat, s.lng], { icon: makeIcon(s.type) })
+        .addTo(map)
+        .on('click', () => showPanel(s));
+      markerLayers.push(m);
+    });
+
+    map.fitBounds(L.polyline(FULL_ROUTE).getBounds(), { padding: [30, 30] });
+
+  } else {
+    const coords = ALL_DAYS[dayNum - 1];
+    drawRoute(coords, DAY_COLORS[dayNum - 1], false);
+
+    // Ferry on day 1
+    if (dayNum === 1) {
+      const ferryLine = L.polyline([[59.0440, 10.0281],[57.5909, 9.9608]], {
+        color: '#0077B6', weight: 3, dashArray: '6 4', opacity: 0.9
+      }).addTo(map);
+      routeLayers.push(ferryLine);
+    }
+
+    // Only stops for this day
+    const dayStops = STOPS.filter(s => s.day.startsWith('Dag ' + dayNum));
+    dayStops.forEach(s => {
+      const m = L.marker([s.lat, s.lng], { icon: makeIcon(s.type) })
+        .addTo(map)
+        .on('click', () => showPanel(s));
+      markerLayers.push(m);
+    });
+
+    map.fitBounds(L.polyline(coords).getBounds(), { padding: [50, 50] });
+  }
+
+  // Current position
+  const pos = TRIP_DATA.currentPosition;
+  const pulseIcon = L.divIcon({
+    className: '',
+    html: `<div style="width:14px;height:14px;border-radius:50%;background:#EE6C4D;border:3px solid white;box-shadow:0 0 0 4px rgba(238,108,77,0.3),0 2px 8px rgba(0,0,0,0.3)"></div>`,
+    iconSize: [14, 14],
+    iconAnchor: [7, 7],
+  });
+  const posMarker = L.marker([pos.lat, pos.lng], { icon: pulseIcon })
+    .addTo(map)
+    .bindPopup(`<strong>📍 Vi er her</strong><br>${pos.label}`);
+  markerLayers.push(posMarker);
+}
+
+// Init: show full route
+showDay(0, document.querySelector('.day-tab'));
+</script>
+<script data-goatcounter="https://almsommer.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
