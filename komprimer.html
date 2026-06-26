@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Komprimer bilde</title>
+<style>
+:root {
+  --road: #2E4057;
+  --sun:  #EE6C4D;
+  --green:#2DA44E;
+  --ink:  #1A1A2E;
+  --paper:#FAFAF7;
+  --rule: #E8E4DC;
+  --muted:#8A8A8A;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: system-ui, sans-serif; background: var(--paper); color: var(--ink); padding-bottom: 60px; }
+
+.header {
+  background: var(--road); color: white; padding: 16px 20px;
+  display: flex; align-items: center; justify-content: space-between;
+  position: sticky; top: 0; z-index: 10;
+}
+.header-title { font-size: 16px; font-weight: 700; }
+.back-btn {
+  font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.75);
+  text-decoration: none; padding: 6px 12px;
+  border: 1px solid rgba(255,255,255,0.25); border-radius: 20px;
+}
+
+.content { max-width: 480px; margin: 0 auto; padding: 24px 16px; }
+
+.drop-zone {
+  border: 2px dashed var(--rule);
+  border-radius: 16px;
+  padding: 40px 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+}
+.drop-zone.active { border-color: var(--road); background: #EBF2FF; }
+.drop-icon { font-size: 36px; margin-bottom: 10px; }
+.drop-text { font-size: 14px; font-weight: 600; color: var(--ink); }
+.drop-sub  { font-size: 12px; color: var(--muted); margin-top: 4px; }
+input[type=file] { display: none; }
+
+.preview-card {
+  display: none;
+  background: white;
+  border: 1.5px solid var(--rule);
+  border-radius: 14px;
+  padding: 16px;
+  margin-top: 16px;
+}
+.preview-card.visible { display: block; }
+.preview-img {
+  width: 100%;
+  border-radius: 10px;
+  margin-bottom: 14px;
+  max-height: 280px;
+  object-fit: contain;
+  background: #f0f0f0;
+}
+
+.size-row {
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 13px; padding: 8px 0; border-bottom: 1px solid var(--rule);
+}
+.size-row:last-child { border-bottom: none; }
+.size-label { color: var(--muted); }
+.size-value { font-weight: 700; }
+.size-value.before { color: var(--sun); }
+.size-value.after  { color: var(--green); }
+
+.field { margin: 14px 0; }
+.field label { display: block; font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 5px; }
+.field input {
+  width: 100%; padding: 11px 13px;
+  border: 1.5px solid var(--rule); border-radius: 9px;
+  font-size: 14px; font-family: inherit; background: var(--paper);
+}
+
+.btn-primary {
+  width: 100%; background: var(--green); color: white; border: none;
+  padding: 14px; border-radius: 10px; font-size: 15px; font-weight: 700;
+  cursor: pointer; margin-top: 6px;
+}
+.btn-secondary {
+  width: 100%; background: transparent; color: var(--road); border: 1.5px solid var(--road);
+  padding: 12px; border-radius: 10px; font-size: 14px; font-weight: 600;
+  cursor: pointer; margin-top: 8px;
+}
+
+.info-box {
+  background: #EBF5FF; border-radius: 10px; padding: 12px 14px;
+  font-size: 13px; color: #1A4A7A; line-height: 1.6; margin: 16px 0;
+}
+.savings-badge {
+  display: inline-block; background: #EAFAF0; color: #1A5C35;
+  font-size: 12px; font-weight: 700; padding: 3px 10px; border-radius: 100px;
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-title">📷 Komprimer bilde</div>
+  <a href="index.html" class="back-btn">← Bloggen</a>
+</div>
+
+<div class="content">
+
+  <div class="info-box">
+    💡 Mobilbilder er ofte 3–5 MB. Denne siden gjør dem mindre <strong>før</strong> du laster dem opp til GitHub – raskere opplasting, raskere lasting for svigerfar.
+  </div>
+
+  <div class="drop-zone" id="dropZone" onclick="document.getElementById('fileInput').click()">
+    <div class="drop-icon">📁</div>
+    <div class="drop-text">Trykk for å velge bilde</div>
+    <div class="drop-sub">eller dra et bilde hit</div>
+  </div>
+  <input type="file" id="fileInput" accept="image/*" onchange="handleFile(this.files[0])">
+
+  <div class="preview-card" id="previewCard">
+    <img class="preview-img" id="previewImg" alt="Forhåndsvisning">
+
+    <div class="size-row">
+      <span class="size-label">Original størrelse</span>
+      <span class="size-value before" id="sizeBefore">—</span>
+    </div>
+    <div class="size-row">
+      <span class="size-label">Komprimert størrelse</span>
+      <span class="size-value after" id="sizeAfter">—</span>
+    </div>
+    <div class="size-row">
+      <span class="size-label">Spart</span>
+      <span class="savings-badge" id="savings">—</span>
+    </div>
+
+    <div class="field">
+      <label>Filnavn (uten mellomrom/norske bokstaver)</label>
+      <input type="text" id="fileName" placeholder="dag2-amsterdam.jpg">
+    </div>
+
+    <button class="btn-primary" onclick="downloadCompressed()">⬇️ Last ned komprimert bilde</button>
+    <div class="info-box" style="margin-top:14px">
+      Etter nedlasting: gå til <strong>github.com/[brukernavn]/[repo]/upload/main/bilder</strong> og last opp filen der.
+    </div>
+  </div>
+
+</div>
+
+<canvas id="canvas" style="display:none"></canvas>
+
+<script>
+let compressedBlob = null;
+
+const dropZone = document.getElementById('dropZone');
+['dragover', 'dragenter'].forEach(evt =>
+  dropZone.addEventListener(evt, e => { e.preventDefault(); dropZone.classList.add('active'); })
+);
+['dragleave', 'drop'].forEach(evt =>
+  dropZone.addEventListener(evt, e => { e.preventDefault(); dropZone.classList.remove('active'); })
+);
+dropZone.addEventListener('drop', e => {
+  const file = e.dataTransfer.files[0];
+  if (file) handleFile(file);
+});
+
+function handleFile(file) {
+  if (!file || !file.type.startsWith('image/')) return;
+
+  const originalSizeKB = (file.size / 1024).toFixed(0);
+  document.getElementById('sizeBefore').textContent = formatSize(file.size);
+
+  const reader = new FileReader();
+  reader.onload = e => {
+    const img = new Image();
+    img.onload = () => {
+      const canvas = document.getElementById('canvas');
+      const ctx = canvas.getContext('2d');
+
+      // Skaler ned til maks 1600px på lengste side
+      const MAX_DIM = 1600;
+      let { width, height } = img;
+      if (width > height && width > MAX_DIM) {
+        height = Math.round(height * (MAX_DIM / width));
+        width = MAX_DIM;
+      } else if (height > MAX_DIM) {
+        width = Math.round(width * (MAX_DIM / height));
+        height = MAX_DIM;
+      }
+
+      canvas.width = width;
+      canvas.height = height;
+      ctx.drawImage(img, 0, 0, width, height);
+
+      canvas.toBlob(blob => {
+        compressedBlob = blob;
+        document.getElementById('previewImg').src = URL.createObjectURL(blob);
+        document.getElementById('sizeAfter').textContent = formatSize(blob.size);
+
+        const savedPct = Math.round((1 - blob.size / file.size) * 100);
+        document.getElementById('savings').textContent = savedPct > 0 ? `-${savedPct}%` : 'Allerede liten';
+
+        document.getElementById('previewCard').classList.add('visible');
+
+        // Forhåndsutfylt filnavn basert på opprinnelig navn
+        const baseName = file.name.replace(/\.[^/.]+$/, '').toLowerCase()
+          .replace(/[æå]/g, 'a').replace(/ø/g, 'o')
+          .replace(/[^a-z0-9-]/g, '-').replace(/-+/g, '-');
+        document.getElementById('fileName').value = baseName + '.jpg';
+      }, 'image/jpeg', 0.78);
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+function formatSize(bytes) {
+  if (bytes > 1024 * 1024) return (bytes / 1024 / 1024).toFixed(1) + ' MB';
+  return (bytes / 1024).toFixed(0) + ' KB';
+}
+
+function downloadCompressed() {
+  if (!compressedBlob) return;
+  let name = document.getElementById('fileName').value.trim() || 'bilde.jpg';
+  if (!name.match(/\.(jpg|jpeg|png)$/i)) name += '.jpg';
+
+  const url = URL.createObjectURL(compressedBlob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = name;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+</script>
+</body>
+</html>
