@@ -1,4 +1,4 @@
-// Oppdatert: 27.6.2026, 11:52:08
+// Oppdatert: 27.6.2026, 11:53:10
 const TRIP_DATA = {
 
   contact: {
@@ -52,6 +52,7 @@ const TRIP_DATA = {
   ],
 
   photos: [
+    { src: "https://res.cloudinary.com/daakblz3f/image/upload/f_auto,q_auto,w_1600/v1782553970/fnpnewpoyrsnhq2zmyot.jpg", caption: "Rett ved Hirtshals" },
     { src: "https://res.cloudinary.com/daakblz3f/image/upload/f_auto,q_auto,w_1600/v1782535302/utkyx7tx56buvqiyf1xc.jpg", caption: "Klar for colorline" }
   ],
 
