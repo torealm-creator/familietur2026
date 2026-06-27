@@ -1,4 +1,4 @@
-// Oppdatert: 27.6.2026, 18:23:39
+// Oppdatert: 27.6.2026, 18:29:00
 const TRIP_DATA = {
 
   contact: {
@@ -37,6 +37,12 @@ const TRIP_DATA = {
   ],
 
   posts: [
+    {
+      id: "post_1782577740605", date: "27. juni 2026", location: "Sittensen, Tyskland",
+      title: "Dag 1 - Foreløpige tall", excerpt: "Dag 1 på vei til Altea – tallene så langt ☀️🚗\n\nVi rullet ut fra Nannestad kl. 04:12, og Zeekr’en har gjort jobben:\n\n🛣️...",
+      fullText: "Dag 1 på vei til Altea – tallene så langt ☀️🚗\n\nVi rullet ut fra Nannestad kl. 04:12, og Zeekr’en har gjort jobben:\n\n🛣️ 743,1 km unnagjort\n⏱️ 8t 4min kjøretid\n💨 95 km/t i snitt\n🔋 184,2 kWt brukt totalt (24,8 kWt/100 km)\n\nAkkurat nå står vi på lader og fyller på – 260 kW inn, fra 43 % og oppover. 27 minutter, så er vi klare for neste etappe. 238 km rekkevidde allerede på skjermen.\n\nÅr tre med denne turen, og bilen sluker Europa-asfalten som om ingenting. 🇪🇸", image: "https://res.cloudinary.com/daakblz3f/image/upload/f_auto,q_auto,w_1600/v1782577721/yromlsxtdprnqk5jsfas.jpg",
+      extraImages: [], featured: false,
+    },
     {
       id: "post_1782536744065", date: "27. juni 2026", location: "Larvik",
       title: "Dag 1 - Larvik til Hirtshals", excerpt: "Første etappe i boks! Vi har rullet fra Nannestad ned til Larvik – 185,5 km på 2 timer og 9 minutter kjøretid. Nå står v...",
