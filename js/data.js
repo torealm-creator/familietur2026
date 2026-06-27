@@ -1,4 +1,4 @@
-// Oppdatert: 27.6.2026, 06:27:50
+// Oppdatert: 27.6.2026, 06:28:05
 const TRIP_DATA = {
 
   contact: {
