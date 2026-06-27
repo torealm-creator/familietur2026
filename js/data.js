@@ -1,4 +1,4 @@
-// Oppdatert: 27.6.2026, 11:44:03
+// Oppdatert: 27.6.2026, 11:52:08
 const TRIP_DATA = {
 
   contact: {
@@ -21,9 +21,9 @@ const TRIP_DATA = {
   },
 
   currentPosition: {
-    lat:   58.21921,
-    lng:   10.02958,
-    label: "Larvik",
+    lat:   58.18363,
+    lng:   10.03924,
+    label: "Hirtshals",
   },
 
   routeStops: [
