@@ -1,4 +1,4 @@
-// Oppdatert: 27.6.2026, 14:54:17
+// Oppdatert: 27.6.2026, 18:23:39
 const TRIP_DATA = {
 
   contact: {
@@ -15,15 +15,15 @@ const TRIP_DATA = {
     text:     "Startet på tur, Dag 1",
     location: "Hirtshals",
     day:      "Dag 1 av 4",
-    nextStop: "Larvik havn → Ringe, Tyskland",
+    nextStop: "Sittensen → Ringe, Tyskland",
     kmDriven: 595,
     isLive:   true,
   },
 
   currentPosition: {
-    lat:   55.66368,
-    lng:   9.55108,
-    label: "Svinholt",
+    lat:   53.29997,
+    lng:   9.53251,
+    label: "Sittensen",
   },
 
   routeStops: [
