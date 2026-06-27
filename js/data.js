@@ -1,4 +1,4 @@
-// Oppdatert: 27.6.2026, 21:11:20
+// Oppdatert: 27.6.2026, 23:20:35
 const TRIP_DATA = {
 
   contact: {
@@ -13,16 +13,16 @@ const TRIP_DATA = {
 
   status: {
     text:     "Startet på tur, Dag 1",
-    location: "Meppen, Tyskland",
+    location: "Ringe, Tyskland",
     day:      "Dag 1 av 4",
     nextStop: "Sittensen → Ringe, Tyskland",
-    kmDriven: 595,
+    kmDriven: 1077,
     isLive:   true,
   },
 
   currentPosition: {
-    lat:   52.69135,
-    lng:   7.29009,
+    lat:   52.61957,
+    lng:   6.91585,
     label: "Meppen",
   },
 
