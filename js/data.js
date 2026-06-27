@@ -1,4 +1,4 @@
-// Oppdatert: 27.6.2026, 14:52:49
+// Oppdatert: 27.6.2026, 14:54:17
 const TRIP_DATA = {
 
   contact: {
@@ -16,7 +16,7 @@ const TRIP_DATA = {
     location: "Hirtshals",
     day:      "Dag 1 av 4",
     nextStop: "Larvik havn → Ringe, Tyskland",
-    kmDriven: 189,
+    kmDriven: 595,
     isLive:   true,
   },
 
