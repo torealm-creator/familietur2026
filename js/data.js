@@ -1,4 +1,4 @@
-// Oppdatert: 27.6.2026, 06:28:32
+// Oppdatert: 27.6.2026, 06:40:05
 const TRIP_DATA = {
 
   contact: {
@@ -12,18 +12,18 @@ const TRIP_DATA = {
   },
 
   status: {
-    text:     "Forbereder avreise",
+    text:     "Startet på tur, Dag 1",
     location: "Nannestad, Norge",
     day:      "Dag 1 av 4",
     nextStop: "Larvik havn → Ringe, Tyskland",
-    kmDriven: 0,
+    kmDriven: 189,
     isLive:   true,
   },
 
   currentPosition: {
-    lat:   59.04486,
-    lng:   10.05995,
-    label: "Nannestad",
+    lat:   59.04121,
+    lng:   10.04684,
+    label: "Larvik",
   },
 
   routeStops: [
