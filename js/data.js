@@ -1,4 +1,4 @@
-// Oppdatert: 27.6.2026, 11:54:07
+// Oppdatert: 27.6.2026, 14:52:49
 const TRIP_DATA = {
 
   contact: {
@@ -21,14 +21,14 @@ const TRIP_DATA = {
   },
 
   currentPosition: {
-    lat:   58.18363,
-    lng:   10.03924,
-    label: "Hirtshals",
+    lat:   55.66368,
+    lng:   9.55108,
+    label: "Svinholt",
   },
 
   routeStops: [
     { label: "Nannestad", state: "done" },
-    { label: "Hirtshals", state: "current" },
+    { label: "Hirtshals", state: "done" },
     { label: "Ringe", state: "" },
     { label: "Amsterdam", state: "" },
     { label: "Loire", state: "" },
