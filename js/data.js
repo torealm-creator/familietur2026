@@ -1,4 +1,4 @@
-// Oppdatert: 27.6.2026, 07:05:44
+// Oppdatert: 27.6.2026, 11:44:03
 const TRIP_DATA = {
 
   contact: {
@@ -13,7 +13,7 @@ const TRIP_DATA = {
 
   status: {
     text:     "Startet på tur, Dag 1",
-    location: "Nannestad, Norge",
+    location: "Hirtshals",
     day:      "Dag 1 av 4",
     nextStop: "Larvik havn → Ringe, Tyskland",
     kmDriven: 189,
@@ -21,14 +21,14 @@ const TRIP_DATA = {
   },
 
   currentPosition: {
-    lat:   59.04121,
-    lng:   10.04684,
+    lat:   58.21921,
+    lng:   10.02958,
     label: "Larvik",
   },
 
   routeStops: [
     { label: "Nannestad", state: "done" },
-    { label: "Hirtshals", state: "" },
+    { label: "Hirtshals", state: "current" },
     { label: "Ringe", state: "" },
     { label: "Amsterdam", state: "" },
     { label: "Loire", state: "" },
