@@ -1,4 +1,4 @@
-// Oppdatert: 27.6.2026, 06:42:05
+// Oppdatert: 27.6.2026, 06:44:01
 const TRIP_DATA = {
 
   contact: {
@@ -46,6 +46,7 @@ const TRIP_DATA = {
   ],
 
   photos: [
+    { src: "https://res.cloudinary.com/daakblz3f/image/upload/f_auto,q_auto,w_1600/v1782535426/xplt3cvhywom6vtdfgmo.jpg", caption: "Ble full bil" },
     { src: "https://res.cloudinary.com/daakblz3f/image/upload/f_auto,q_auto,w_1600/v1782535302/utkyx7tx56buvqiyf1xc.jpg", caption: "Klar for colorline" }
   ],
 
