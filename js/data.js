@@ -1,4 +1,4 @@
-// Oppdatert: 28.6.2026, 11:03:46
+// Oppdatert: 28.6.2026, 18:32:28
 const TRIP_DATA = {
 
   contact: {
@@ -13,7 +13,7 @@ const TRIP_DATA = {
 
   status: {
     text:     "Startet på tur, Dag 2",
-    location: "Ringe, Tyskland",
+    location: "Seclin, Frankrike",
     day:      "Dag 2 av 4",
     nextStop: "Ringe → Amsterdam, Nederland",
     kmDriven: 1077,
@@ -21,16 +21,16 @@ const TRIP_DATA = {
   },
 
   currentPosition: {
-    lat:   52.61958,
-    lng:   6.91589,
-    label: "Meppen",
+    lat:   50.54855,
+    lng:   3.05193,
+    label: "Seclin",
   },
 
   routeStops: [
     { label: "Nannestad", state: "done" },
     { label: "Hirtshals", state: "done" },
     { label: "Ringe", state: "done" },
-    { label: "Amsterdam", state: "current" },
+    { label: "Amsterdam", state: "done" },
     { label: "Loire", state: "" },
     { label: "Bordeaux", state: "" },
     { label: "Altea", state: "" }
