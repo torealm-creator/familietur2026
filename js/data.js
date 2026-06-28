@@ -1,4 +1,4 @@
-// Oppdatert: 28.6.2026, 22:57:24
+// Oppdatert: 28.6.2026, 23:03:03
 const TRIP_DATA = {
 
   contact: {
@@ -16,7 +16,7 @@ const TRIP_DATA = {
     location: "L’aérodrome d’Étampes- Mondésir",
     day:      "Dag 2 av 4",
     nextStop: "Ringe → Amsterdam, Nederland",
-    kmDriven: 1077,
+    kmDriven: 1245,
     isLive:   true,
   },
 
