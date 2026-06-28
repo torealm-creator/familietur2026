@@ -1,4 +1,4 @@
-// Oppdatert: 28.6.2026, 22:18:28
+// Oppdatert: 28.6.2026, 22:20:41
 const TRIP_DATA = {
 
   contact: {
@@ -13,7 +13,7 @@ const TRIP_DATA = {
 
   status: {
     text:     "Startet på tur, Dag 2",
-    location: "Seclin, Frankrike",
+    location: "L’aérodrome d’Étampes- Mondésir",
     day:      "Dag 2 av 4",
     nextStop: "Ringe → Amsterdam, Nederland",
     kmDriven: 1077,
@@ -21,9 +21,9 @@ const TRIP_DATA = {
   },
 
   currentPosition: {
-    lat:   50.54855,
-    lng:   3.05193,
-    label: "Seclin",
+    lat:   48.372,
+    lng:   2.08101,
+    label: "Mondésir,Frankrike",
   },
 
   routeStops: [
@@ -64,7 +64,6 @@ const TRIP_DATA = {
   ],
 
   photos: [
-    { src: "https://res.cloudinary.com/daakblz3f/image/upload/f_auto,q_auto,w_1600/v1782677892/xo8ylgfcpvq0yyd0dsed.jpg", caption: "Christoffer" },
     { src: "https://res.cloudinary.com/daakblz3f/image/upload/f_auto,q_auto,w_1600/v1782587464/kqpceuvhhcvagfeke2q8.jpg", caption: "Middag i meppen" },
     { src: "https://res.cloudinary.com/daakblz3f/image/upload/f_auto,q_auto,w_1600/v1782554035/dv7uwhpfopdzbnkirpws.jpg", caption: "Sjøluft" },
     { src: "https://res.cloudinary.com/daakblz3f/image/upload/f_auto,q_auto,w_1600/v1782553970/fnpnewpoyrsnhq2zmyot.jpg", caption: "Rett ved Hirtshals" },
