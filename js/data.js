@@ -1,4 +1,4 @@
-// Oppdatert: 28.6.2026, 22:20:41
+// Oppdatert: 28.6.2026, 22:55:33
 const TRIP_DATA = {
 
   contact: {
@@ -21,8 +21,8 @@ const TRIP_DATA = {
   },
 
   currentPosition: {
-    lat:   48.372,
-    lng:   2.08101,
+    lat:   48.37193,
+    lng:   2.08073,
     label: "Mondésir,Frankrike",
   },
 
@@ -37,6 +37,12 @@ const TRIP_DATA = {
   ],
 
   posts: [
+    {
+      id: "post_1782680133454", date: "28. juni 2026", location: "Mondésir,Frankrike",
+      title: "Dag 2.2 Gjennom tre land på én dag – nå i Frankrike!", excerpt: "Amsterdam ga oss akkurat det vi kom for – shopping, byvandring og god stemning i kanalbyen. Christoffer fikk sine timer ...",
+      fullText: "Amsterdam ga oss akkurat det vi kom for – shopping, byvandring og god stemning i kanalbyen. Christoffer fikk sine timer i byen, og alle var fornøyde da vi satte oss i bilen igjen.\n\nDerfra ble det en lang kjøredag sørover: Nederland, Belgia og inn i Frankrike – tre land på én dag! Vi landet til slutt på det koselige hotellet Domaine Malar, rett ved flyplassen Aérodrome d'Étampes-Mondésir, sør for Paris.\n\nRolig omgivelser etter en lang dag bak rattet. I morgen fortsetter vi videre sørover mot Loire-dalen og slottene som venter.\n\nGod natt fra Frankrike! 🇫🇷", image: "https://res.cloudinary.com/daakblz3f/image/upload/f_auto,q_auto,w_1600/v1782680120/nszh8tdrmigif2jnv5u8.png",
+      extraImages: [], featured: false,
+    },
     {
       id: "post_1782626648471", date: "28. juni 2026", location: "Ringen, Tyskland",
       title: "Dag 2 – God morgen fra hestegården, kursen satt mot Amsterdam", excerpt: "God morgen fra hestegården i Ringe! Litt lyn og torden i natt, men ellers en fin og rolig overnatting før dag 2 av turen...",
