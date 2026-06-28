@@ -1,4 +1,4 @@
-// Oppdatert: 28.6.2026, 18:32:28
+// Oppdatert: 28.6.2026, 18:33:30
 const TRIP_DATA = {
 
   contact: {
@@ -64,6 +64,7 @@ const TRIP_DATA = {
   ],
 
   photos: [
+    { src: "https://res.cloudinary.com/daakblz3f/image/upload/f_auto,q_auto,w_1600/v1782664397/xhx7ty5y8nspkfunitfm.jpg", caption: "Amsterdam" },
     { src: "https://res.cloudinary.com/daakblz3f/image/upload/f_auto,q_auto,w_1600/v1782587464/kqpceuvhhcvagfeke2q8.jpg", caption: "Middag i meppen" },
     { src: "https://res.cloudinary.com/daakblz3f/image/upload/f_auto,q_auto,w_1600/v1782554035/dv7uwhpfopdzbnkirpws.jpg", caption: "Sjøluft" },
     { src: "https://res.cloudinary.com/daakblz3f/image/upload/f_auto,q_auto,w_1600/v1782553970/fnpnewpoyrsnhq2zmyot.jpg", caption: "Rett ved Hirtshals" },
