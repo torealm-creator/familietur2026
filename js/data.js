@@ -1,4 +1,4 @@
-// Oppdatert: 27.6.2026, 23:20:35
+// Oppdatert: 28.6.2026, 07:51:56
 const TRIP_DATA = {
 
   contact: {
@@ -12,24 +12,24 @@ const TRIP_DATA = {
   },
 
   status: {
-    text:     "Startet på tur, Dag 1",
+    text:     "Startet på tur, Dag 2",
     location: "Ringe, Tyskland",
-    day:      "Dag 1 av 4",
-    nextStop: "Sittensen → Ringe, Tyskland",
+    day:      "Dag 2 av 4",
+    nextStop: "Ringe → Amsterdam, Nederland",
     kmDriven: 1077,
     isLive:   true,
   },
 
   currentPosition: {
-    lat:   52.61957,
-    lng:   6.91585,
+    lat:   52.61958,
+    lng:   6.91589,
     label: "Meppen",
   },
 
   routeStops: [
     { label: "Nannestad", state: "done" },
     { label: "Hirtshals", state: "done" },
-    { label: "Ringe", state: "current" },
+    { label: "Ringe", state: "done" },
     { label: "Amsterdam", state: "" },
     { label: "Loire", state: "" },
     { label: "Bordeaux", state: "" },
