@@ -1,4 +1,4 @@
-// Oppdatert: 28.6.2026, 22:55:33
+// Oppdatert: 28.6.2026, 22:57:24
 const TRIP_DATA = {
 
   contact: {
@@ -12,7 +12,7 @@ const TRIP_DATA = {
   },
 
   status: {
-    text:     "Startet på tur, Dag 2",
+    text:     "Avsluttet, Dag 2",
     location: "L’aérodrome d’Étampes- Mondésir",
     day:      "Dag 2 av 4",
     nextStop: "Ringe → Amsterdam, Nederland",
