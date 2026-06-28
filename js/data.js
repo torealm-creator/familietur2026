@@ -1,4 +1,4 @@
-// Oppdatert: 28.6.2026, 07:51:56
+// Oppdatert: 28.6.2026, 08:04:08
 const TRIP_DATA = {
 
   contact: {
@@ -37,6 +37,12 @@ const TRIP_DATA = {
   ],
 
   posts: [
+    {
+      id: "post_1782626648471", date: "28. juni 2026", location: "Ringen, Tyskland",
+      title: "Dag 2 – God morgen fra hestegården, kursen satt mot Amsterdam", excerpt: "God morgen fra hestegården i Ringe! Litt lyn og torden i natt, men ellers en fin og rolig overnatting før dag 2 av turen...",
+      fullText: "God morgen fra hestegården i Ringe! Litt lyn og torden i natt, men ellers en fin og rolig overnatting før dag 2 av turen.\n\nI dag setter vi kursen mot Amsterdam, der Christoffer endelig får sine 3-4 timer i byen han har sett frem til. Kanaler, sykler og kanskje en stroopwafel eller to står på programmet.\n\nEtter Amsterdam fortsetter vi sørover gjennom Belgia og inn i Frankrike, med Orléans som mål for overnatting i kveld. En lang kjøredag venter, men spenningen er på topp – ny by, ny etappe!\n\nGod morgen fra Tyskland! ☀️", image: "https://res.cloudinary.com/daakblz3f/image/upload/f_auto,q_auto,w_1600/v1782626627/vgfplekts25x44f6ix8z.jpg",
+      extraImages: [], featured: false,
+    },
     {
       id: "post_1782577740605", date: "27. juni 2026", location: "Sittensen, Tyskland",
       title: "Dag 1 - Foreløpige tall", excerpt: "Dag 1 på vei til Altea – tallene så langt ☀️🚗\n\nVi rullet ut fra Nannestad kl. 04:12, og Zeekr’en har gjort jobben:\n\n🛣️...",
