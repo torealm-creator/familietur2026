@@ -1,4 +1,4 @@
-// Oppdatert: 29.6.2026, 22:57:08
+// Oppdatert: 29.6.2026, 23:14:17
 const TRIP_DATA = {
 
   contact: {
@@ -37,6 +37,12 @@ const TRIP_DATA = {
   ],
 
   posts: [
+    {
+      id: "post_1782767657036", date: "29. juni 2026", location: "Endelig i Spania / San Sebastian",
+      title: "763 km på én dag – Zeekr-en leverer", excerpt: "Etter dagens 763 km er det fortsatt et stykke igjen – omtrent 713 km og snaut 7 timers kjøring fra San Sebastián til Alt...",
+      fullText: "Etter dagens 763 km er det fortsatt et stykke igjen – omtrent 713 km og snaut 7 timers kjøring fra San Sebastián til Altea. Vi er nå inne i Spania, og det går videre gjennom Zaragoza, Pamplona og Valencia før vi endelig ruller inn i Altea.\n\nValencia-regionen, som vi passerer på vei sørover, har i år vært preget av en tøff skogbrannsesong i Spania generelt. Vi har sjekket brannkartene, og det er ingen aktive branner langs ruten vår akkurat nå – men det er en påminnelse om at sommeren har vært varm og tørr her sørover.\n\nVi følger med på veien fremover, og holder oss til offisielle kan", image: "https://res.cloudinary.com/daakblz3f/image/upload/f_auto,q_auto,w_1600/v1782767650/y2guenisk1i5cp6ifpoe.jpg",
+      extraImages: [], featured: false,
+    },
     {
       id: "post_1782753158486", date: "29. juni 2026", location: "San Sebastian",
       title: "Dag 3- siste overnatting", excerpt: "Siste overnatting på turen til Altea blir hos Donostia i San Sebastian. Er lite, koselig hotell med 10 rom. \nNå skal vi ...",
