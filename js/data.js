@@ -1,4 +1,4 @@
-// Oppdatert: 29.6.2026, 16:24:15
+// Oppdatert: 29.6.2026, 19:12:38
 const TRIP_DATA = {
 
   contact: {
@@ -12,18 +12,18 @@ const TRIP_DATA = {
   },
 
   status: {
-    text:     "Dag 3.1-Første stopp- er lite slott i Frankrike",
-    location: "L’aérodrome d’Étampes- Mondésir",
+    text:     "Del 3.2 - San Sebastian. Spania",
+    location: "San Sebastian",
     day:      "Dag 3 av 4",
-    nextStop: "Loire-dalen",
-    kmDriven: 1927,
+    nextStop: "Altea",
+    kmDriven: 2577,
     isLive:   true,
   },
 
   currentPosition: {
-    lat:   47.66378,
-    lng:   1.53386,
-    label: "Chambord,Frankrike",
+    lat:   43.33865,
+    lng:   -1.75814,
+    label: "San Sebastian, Spania",
   },
 
   routeStops: [
@@ -32,11 +32,17 @@ const TRIP_DATA = {
     { label: "Ringe", state: "done" },
     { label: "Amsterdam", state: "done" },
     { label: "Loire", state: "done" },
-    { label: "Bordeaux", state: "current" },
+    { label: "Bordeaux", state: "done" },
     { label: "Altea", state: "" }
   ],
 
   posts: [
+    {
+      id: "post_1782753158486", date: "29. juni 2026", location: "San Sebastian",
+      title: "Dag 3- siste overnatting", excerpt: "Siste overnatting på turen til Altea blir hos Donostia i San Sebastian. Er lite, koselig hotell med 10 rom. \nNå skal vi ...",
+      fullText: "Siste overnatting på turen til Altea blir hos Donostia i San Sebastian. Er lite, koselig hotell med 10 rom. \nNå skal vi nyte en middag ved stranden og lade til siste etappe i morgen.", image: "https://res.cloudinary.com/daakblz3f/image/upload/f_auto,q_auto,w_1600/v1782753036/qdtzvn0vokvovcsnyzsl.jpg",
+      extraImages: [], featured: false,
+    },
     {
       id: "post_1782722730568", date: "29. juni 2026", location: "Chambord",
       title: "Dag 3 - franske slott", excerpt: "Dagen starter med et stopp på Chateau de Chambord. De største og mest ikoniske renessanse slottet i Loire dalen med sine...",
