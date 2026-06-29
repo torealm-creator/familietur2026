@@ -1,4 +1,4 @@
-// Oppdatert: 29.6.2026, 23:21:47
+// Oppdatert: 29.6.2026, 23:23:07
 const TRIP_DATA = {
 
   contact: {
@@ -88,7 +88,7 @@ const TRIP_DATA = {
   ],
 
   photos: [
-    { src: "https://res.cloudinary.com/daakblz3f/image/upload/f_auto,q_auto,w_1600/v1782768089/s4fdrnszjkp7xp2gvmor.jpg", caption: "Kongestol" },
+    { src: "https://res.cloudinary.com/daakblz3f/image/upload/f_auto,q_auto,w_1600/v1782768170/b2t8kumsasiccdkerbd3.jpg", caption: "Sansenastian" },
     { src: "https://res.cloudinary.com/daakblz3f/image/upload/f_auto,q_auto,w_1600/v1782767914/ujipkgth65ds9rwdgurg.jpg", caption: "Tapaskongen" },
     { src: "https://res.cloudinary.com/daakblz3f/image/upload/f_auto,q_auto,w_1600/v1782737518/qj02mfspnbkgpochkwef.jpg", caption: "Kongen" },
     { src: "https://res.cloudinary.com/daakblz3f/image/upload/f_auto,q_auto,w_1600/v1782719795/ct6j2iqqk9dp3zc5hg4v.png", caption: "Hotel Mondesir" },
