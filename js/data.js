@@ -1,4 +1,4 @@
-// Oppdatert: 28.6.2026, 23:03:03
+// Oppdatert: 29.6.2026, 08:34:02
 const TRIP_DATA = {
 
   contact: {
@@ -12,10 +12,10 @@ const TRIP_DATA = {
   },
 
   status: {
-    text:     "Avsluttet, Dag 2",
+    text:     "Dag3 - Rolig start",
     location: "L’aérodrome d’Étampes- Mondésir",
-    day:      "Dag 2 av 4",
-    nextStop: "Ringe → Amsterdam, Nederland",
+    day:      "Dag 3 av 4",
+    nextStop: "Loire-dalen /orleans",
     kmDriven: 1245,
     isLive:   true,
   },
