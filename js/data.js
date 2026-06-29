@@ -1,9 +1,9 @@
-// Oppdatert: 29.6.2026, 08:34:02
+// Oppdatert: 29.6.2026, 08:34:41
 const TRIP_DATA = {
 
   contact: {
-    phone: "",
-    email: "",
+    phone: "+4790073977",
+    email: "Tore_alm@icloud.com",
   },
 
   glympse: {
