@@ -1,4 +1,4 @@
-// Oppdatert: 29.6.2026, 09:57:00
+// Oppdatert: 29.6.2026, 10:45:30
 const TRIP_DATA = {
 
   contact: {
@@ -12,18 +12,18 @@ const TRIP_DATA = {
   },
 
   status: {
-    text:     "Dag3 - Rolig start",
+    text:     "Dag 3.1-Første stopp- er lite slott i Frankrike",
     location: "L’aérodrome d’Étampes- Mondésir",
     day:      "Dag 3 av 4",
-    nextStop: "Loire-dalen /orleans",
-    kmDriven: 1245,
+    nextStop: "Loire-dalen",
+    kmDriven: 1927,
     isLive:   true,
   },
 
   currentPosition: {
-    lat:   48.37193,
-    lng:   2.08073,
-    label: "Mondésir,Frankrike",
+    lat:   47.66378,
+    lng:   1.53386,
+    label: "Chambord,Frankrike",
   },
 
   routeStops: [
@@ -37,6 +37,12 @@ const TRIP_DATA = {
   ],
 
   posts: [
+    {
+      id: "post_1782722730568", date: "29. juni 2026", location: "Chambord",
+      title: "Dag 3 - franske slott", excerpt: "Dagen starter med et stopp på Chateau de Chambord. De største og mest ikoniske renessanse slottet i Loire dalen med sine...",
+      fullText: "Dagen starter med et stopp på Chateau de Chambord. De største og mest ikoniske renessanse slottet i Loire dalen med sine 426 rom, 282 peiser, and 77 trapper.", image: "https://res.cloudinary.com/daakblz3f/image/upload/f_auto,q_auto,w_1600/v1782722705/lcpiuv4rqw4e19rqzuls.webp",
+      extraImages: [], featured: false,
+    },
     {
       id: "post_1782680133454", date: "28. juni 2026", location: "Mondésir,Frankrike",
       title: "Dag 2.2 Gjennom tre land på én dag – nå i Frankrike!", excerpt: "Amsterdam ga oss akkurat det vi kom for – shopping, byvandring og god stemning i kanalbyen. Christoffer fikk sine timer ...",
