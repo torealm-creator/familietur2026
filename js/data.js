@@ -1,4 +1,4 @@
-// Oppdatert: 29.6.2026, 23:16:16
+// Oppdatert: 29.6.2026, 23:18:48
 const TRIP_DATA = {
 
   contact: {
@@ -88,6 +88,7 @@ const TRIP_DATA = {
   ],
 
   photos: [
+    { src: "https://res.cloudinary.com/daakblz3f/image/upload/f_auto,q_auto,w_1600/v1782767914/ujipkgth65ds9rwdgurg.jpg", caption: "Tapaskongen" },
     { src: "https://res.cloudinary.com/daakblz3f/image/upload/f_auto,q_auto,w_1600/v1782737518/qj02mfspnbkgpochkwef.jpg", caption: "Kongen" },
     { src: "https://res.cloudinary.com/daakblz3f/image/upload/f_auto,q_auto,w_1600/v1782719795/ct6j2iqqk9dp3zc5hg4v.png", caption: "Hotel Mondesir" },
     { src: "https://res.cloudinary.com/daakblz3f/image/upload/f_auto,q_auto,w_1600/v1782587464/kqpceuvhhcvagfeke2q8.jpg", caption: "Middag i meppen" },
