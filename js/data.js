@@ -1,4 +1,4 @@
-// Oppdatert: 29.6.2026, 19:12:38
+// Oppdatert: 29.6.2026, 22:57:08
 const TRIP_DATA = {
 
   contact: {
@@ -8,7 +8,7 @@ const TRIP_DATA = {
 
   glympse: {
     active: true,
-    url:    "https://maps.app.goo.gl/SHXzwAi5Z1nBSWbXA",
+    url:    "https://maps.app.goo.gl/RTRkgj1vsKET9qWg8",
   },
 
   status: {
