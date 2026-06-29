@@ -1,4 +1,4 @@
-// Oppdatert: 29.6.2026, 15:40:23
+// Oppdatert: 29.6.2026, 16:24:15
 const TRIP_DATA = {
 
   contact: {
@@ -21,8 +21,8 @@ const TRIP_DATA = {
   },
 
   currentPosition: {
-    lat:   45.68041,
-    lng:   -0.64342,
+    lat:   47.66378,
+    lng:   1.53386,
     label: "Chambord,Frankrike",
   },
 
@@ -32,7 +32,7 @@ const TRIP_DATA = {
     { label: "Ringe", state: "done" },
     { label: "Amsterdam", state: "done" },
     { label: "Loire", state: "done" },
-    { label: "Bordeaux", state: "" },
+    { label: "Bordeaux", state: "current" },
     { label: "Altea", state: "" }
   ],
 
