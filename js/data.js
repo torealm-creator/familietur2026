@@ -1,4 +1,4 @@
-// Oppdatert: 30.6.2026, 16:50:56
+// Oppdatert: 30.6.2026, 21:46:33
 const TRIP_DATA = {
 
   contact: {
@@ -37,6 +37,12 @@ const TRIP_DATA = {
   ],
 
   posts: [
+    {
+      id: "post_1782848793215", date: "30. juni 2026", location: "Altea, spania",
+      title: "Endelig fremme", excerpt: "Etter fire dager på veien, syv land, og en helt ny bil satt på prøve – vi er fremme i Altea!\n\nFra Nannestad, over Skager...",
+      fullText: "Etter fire dager på veien, syv land, og en helt ny bil satt på prøve – vi er fremme i Altea!\n\nFra Nannestad, over Skagerrak med Color Line, gjennom Danmark, Tyskland, Nederland, Belgia, Frankrike og til slutt Spania. Zeekr-en har levert hele veien, og familien har holdt ut tålmodig gjennom mange lange kjøretimer.\n\nNå venter leiligheten, balkongen, de gode tomatene – og forhåpentligvis mange late dager i solen fremover. Tusen takk til alle som har fulgt med på bloggen underveis!\n\nGod sommer fra Costa Blanca! ☀️🇪🇸", image: "https://res.cloudinary.com/daakblz3f/image/upload/f_auto,q_auto,w_1600/v1782848741/kgz1nsu6i4pqxtx317jn.png",
+      extraImages: [], featured: false,
+    },
     {
       id: "post_1782825086217", date: "30. juni 2026", location: "Valencia",
       title: "Siste stopp før vi er fremme", excerpt: "I dag har det gått unna – 591 km kjørt siden start kl. 08:28, med en snitthastighet på hele 108 km/t. Spanske motorveier...",
