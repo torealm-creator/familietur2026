@@ -1,4 +1,4 @@
-// Oppdatert: 30.6.2026, 09:46:21
+// Oppdatert: 30.6.2026, 09:47:53
 const TRIP_DATA = {
 
   contact: {
@@ -88,7 +88,7 @@ const TRIP_DATA = {
   ],
 
   photos: [
-    { src: "https://res.cloudinary.com/daakblz3f/image/upload/f_auto,q_auto,w_1600/v1782805578/xqz9fcmfe3uy0npgqnix.jpg", caption: "" },
+    { src: "https://res.cloudinary.com/daakblz3f/image/upload/f_auto,q_auto,w_1600/v1782805668/y7j5omcx3vz9x92rxyfa.jpg", caption: "" },
     { src: "https://res.cloudinary.com/daakblz3f/image/upload/f_auto,q_auto,w_1600/v1782768170/b2t8kumsasiccdkerbd3.jpg", caption: "Sansenastian" },
     { src: "https://res.cloudinary.com/daakblz3f/image/upload/f_auto,q_auto,w_1600/v1782767914/ujipkgth65ds9rwdgurg.jpg", caption: "Tapaskongen" },
     { src: "https://res.cloudinary.com/daakblz3f/image/upload/f_auto,q_auto,w_1600/v1782737518/qj02mfspnbkgpochkwef.jpg", caption: "Kongen" },
