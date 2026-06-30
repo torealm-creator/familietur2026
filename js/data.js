@@ -1,4 +1,4 @@
-// Oppdatert: 30.6.2026, 15:09:17
+// Oppdatert: 30.6.2026, 15:11:26
 const TRIP_DATA = {
 
   contact: {
@@ -37,6 +37,12 @@ const TRIP_DATA = {
   ],
 
   posts: [
+    {
+      id: "post_1782825086217", date: "30. juni 2026", location: "Valencia",
+      title: "Siste stopp før vi er fremme", excerpt: "I dag har det gått unna – 591 km kjørt siden start kl. 08:28, med en snitthastighet på hele 108 km/t. Spanske motorveier...",
+      fullText: "I dag har det gått unna – 591 km kjørt siden start kl. 08:28, med en snitthastighet på hele 108 km/t. Spanske motorveier har tydeligvis vært gunstige!\n\nForbruket har ligget på 146,3 kWh, omtrent 24,8 kWh/100 km – helt på linje med resten av turen.\n\nNå er det bare omtrent 122 km igjen til Altea. Leiligheten, VM-kamp, snart er vi fremme! Et glass rødvin eller to 🤩", image: "",
+      extraImages: [], featured: false,
+    },
     {
       id: "post_1782767657036", date: "29. juni 2026", location: "Endelig i Spania / San Sebastian",
       title: "763 km på én dag – Zeekr-en leverer", excerpt: "Etter dagens 763 km er det fortsatt et stykke igjen – omtrent 713 km og snaut 7 timers kjøring fra San Sebastián til Alt...",
