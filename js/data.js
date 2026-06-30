@@ -1,4 +1,4 @@
-// Oppdatert: 30.6.2026, 09:45:31
+// Oppdatert: 30.6.2026, 09:46:21
 const TRIP_DATA = {
 
   contact: {
@@ -37,12 +37,6 @@ const TRIP_DATA = {
   ],
 
   posts: [
-    {
-      id: "post_1782805531803", date: "30. juni 2026", location: "På veien",
-      title: "Dag 4- siste etappe fra vest til øst", excerpt: "Da har vi startet på siste etappe og i dag skal vi krysse Spania fra San Sebastian til Altea....",
-      fullText: "Da har vi startet på siste etappe og i dag skal vi krysse Spania fra San Sebastian til Altea.", image: "https://res.cloudinary.com/daakblz3f/image/upload/f_auto,q_auto,w_1600/v1782805200/gtjgm7x8emwgonxx6dci.jpg",
-      extraImages: [], featured: false,
-    },
     {
       id: "post_1782767657036", date: "29. juni 2026", location: "Endelig i Spania / San Sebastian",
       title: "763 km på én dag – Zeekr-en leverer", excerpt: "Etter dagens 763 km er det fortsatt et stykke igjen – omtrent 713 km og snaut 7 timers kjøring fra San Sebastián til Alt...",
@@ -94,6 +88,7 @@ const TRIP_DATA = {
   ],
 
   photos: [
+    { src: "https://res.cloudinary.com/daakblz3f/image/upload/f_auto,q_auto,w_1600/v1782805578/xqz9fcmfe3uy0npgqnix.jpg", caption: "" },
     { src: "https://res.cloudinary.com/daakblz3f/image/upload/f_auto,q_auto,w_1600/v1782768170/b2t8kumsasiccdkerbd3.jpg", caption: "Sansenastian" },
     { src: "https://res.cloudinary.com/daakblz3f/image/upload/f_auto,q_auto,w_1600/v1782767914/ujipkgth65ds9rwdgurg.jpg", caption: "Tapaskongen" },
     { src: "https://res.cloudinary.com/daakblz3f/image/upload/f_auto,q_auto,w_1600/v1782737518/qj02mfspnbkgpochkwef.jpg", caption: "Kongen" },
