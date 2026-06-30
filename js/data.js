@@ -1,4 +1,4 @@
-// Oppdatert: 29.6.2026, 23:23:07
+// Oppdatert: 30.6.2026, 09:45:31
 const TRIP_DATA = {
 
   contact: {
@@ -12,18 +12,18 @@ const TRIP_DATA = {
   },
 
   status: {
-    text:     "Del 3.2 - San Sebastian. Spania",
-    location: "San Sebastian",
-    day:      "Dag 3 av 4",
-    nextStop: "Altea",
-    kmDriven: 2577,
+    text:     "Del 4- Fra vest til øst",
+    location: "Pamplona",
+    day:      "Dag 4 av 4",
+    nextStop: "Zaragoza",
+    kmDriven: 2663,
     isLive:   true,
   },
 
   currentPosition: {
-    lat:   43.33865,
-    lng:   -1.75814,
-    label: "San Sebastian, Spania",
+    lat:   42.74191,
+    lng:   -1.62282,
+    label: "Pamplona, Spania",
   },
 
   routeStops: [
@@ -37,6 +37,12 @@ const TRIP_DATA = {
   ],
 
   posts: [
+    {
+      id: "post_1782805531803", date: "30. juni 2026", location: "På veien",
+      title: "Dag 4- siste etappe fra vest til øst", excerpt: "Da har vi startet på siste etappe og i dag skal vi krysse Spania fra San Sebastian til Altea....",
+      fullText: "Da har vi startet på siste etappe og i dag skal vi krysse Spania fra San Sebastian til Altea.", image: "https://res.cloudinary.com/daakblz3f/image/upload/f_auto,q_auto,w_1600/v1782805200/gtjgm7x8emwgonxx6dci.jpg",
+      extraImages: [], featured: false,
+    },
     {
       id: "post_1782767657036", date: "29. juni 2026", location: "Endelig i Spania / San Sebastian",
       title: "763 km på én dag – Zeekr-en leverer", excerpt: "Etter dagens 763 km er det fortsatt et stykke igjen – omtrent 713 km og snaut 7 timers kjøring fra San Sebastián til Alt...",
