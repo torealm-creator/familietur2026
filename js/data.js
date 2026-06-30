@@ -1,4 +1,4 @@
-// Oppdatert: 30.6.2026, 09:51:51
+// Oppdatert: 30.6.2026, 15:09:17
 const TRIP_DATA = {
 
   contact: {
@@ -13,16 +13,16 @@ const TRIP_DATA = {
 
   status: {
     text:     "Del 4- Fra vest til øst",
-    location: "Pamplona",
+    location: "Valencia",
     day:      "Dag 4 av 4",
-    nextStop: "Zaragoza",
+    nextStop: "Altea",
     kmDriven: 2663,
     isLive:   true,
   },
 
   currentPosition: {
-    lat:   42.74191,
-    lng:   -1.62282,
+    lat:   39.40057,
+    lng:   -0.49304,
     label: "Pamplona, Spania",
   },
 
