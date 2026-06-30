@@ -1,4 +1,4 @@
-// Oppdatert: 30.6.2026, 09:50:29
+// Oppdatert: 30.6.2026, 09:51:51
 const TRIP_DATA = {
 
   contact: {
@@ -88,6 +88,7 @@ const TRIP_DATA = {
   ],
 
   photos: [
+    { src: "https://res.cloudinary.com/daakblz3f/image/upload/f_auto,q_auto,w_1600/v1782805898/ir5tp9jbxatepyat3mwz.jpg", caption: "San Sebastian" },
     { src: "https://res.cloudinary.com/daakblz3f/image/upload/f_auto,q_auto,w_1600/v1782805826/mp70fr4vjq1nlfg2votb.jpg", caption: "" },
     { src: "https://res.cloudinary.com/daakblz3f/image/upload/f_auto,q_auto,w_1600/v1782805725/omn1ibsovlnbpmr0h86b.jpg", caption: "" },
     { src: "https://res.cloudinary.com/daakblz3f/image/upload/f_auto,q_auto,w_1600/v1782768170/b2t8kumsasiccdkerbd3.jpg", caption: "Sansenastian" },
