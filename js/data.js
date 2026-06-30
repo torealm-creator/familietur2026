@@ -1,4 +1,4 @@
-// Oppdatert: 30.6.2026, 15:11:26
+// Oppdatert: 30.6.2026, 16:50:56
 const TRIP_DATA = {
 
   contact: {
@@ -33,7 +33,7 @@ const TRIP_DATA = {
     { label: "Amsterdam", state: "done" },
     { label: "Loire", state: "done" },
     { label: "Bordeaux", state: "done" },
-    { label: "Altea", state: "" }
+    { label: "Altea", state: "current" }
   ],
 
   posts: [
